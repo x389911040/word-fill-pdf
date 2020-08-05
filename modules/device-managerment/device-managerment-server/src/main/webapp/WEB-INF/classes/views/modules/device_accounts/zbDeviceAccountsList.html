@@ -1,0 +1,223 @@
+<% layout('/layouts/default.html', {title: '设备台账管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> ${text('设备台账管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<% if(hasPermi('device_accounts:zbDeviceAccounts:edit')){ %>
+					<a href="${ctx}/device/device_accounts/zbDeviceAccounts/form" class="btn btn-default btnTool" id="btnRegister" title="${text('登记')}"><i class="fa fa-plus"></i> ${text('登记')}</a>&nbsp;&nbsp;
+				<% } %>
+				<a href="${ctx}/device/device_move/zbDeviceMove/form" class="btn btn-default btnTool" id="btnMove" title="${text('移交')}"><i class="glyphicon glyphicon-share-alt"></i> ${text('移交')}</a>&nbsp;&nbsp;
+				<a href="#" class="btn btn-default btnTool" id="btnSeal" title="${text('封存/启封')}"><i class="glyphicon glyphicon-briefcase"></i> ${text('封存/启封')}</a>&nbsp;&nbsp;
+				<a href="#" class="btn btn-default btnTool" id="btnFree" title="${text('闲置/启用')}"><i class="glyphicon glyphicon-compressed"></i> ${text('闲置/启用')}</a>&nbsp;&nbsp;
+<!--				<a href="#" class="btn btn-default" id="btnBorrow" title="${text('借用')}"><i class="glyphicon glyphicon-link"></i> ${text('借用')}</a>&nbsp;&nbsp;-->
+				<a href="${ctx}/device/device_repair_apply/zbDeviceRepairApply/form" class="btn btn-default btnTool" id="btnRepair" title="${text('维修')}"><i class="glyphicon glyphicon-wrench"></i> ${text('维修')}</a>&nbsp;&nbsp;
+				<a href="#" class="btn btn-default btnTool" id="btnScrap" title="${text('报废')}"><i class="glyphicon glyphicon-ban-circle"></i> ${text('报废')}</a>
+<!--				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>-->
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${zbDeviceAccounts}" action="${ctx}/device/device_accounts/zbDeviceAccounts/listData" method="post" class="form-inline"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('设备编码')}：</label>
+					<div class="control-inline">
+						<#form:input path="accountsCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('设备名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="deviceName" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+<!--				<div class="form-group">-->
+<!--					<label class="control-label">${text('设备类型')}：</label>-->
+<!--					<div class="control-inline" style="width: 120px">-->
+<!--						<#form:select path="deviceType"  dictType="zb_device_type" blankOption="true" blankOptionLabel="全部" class="form-control"/>-->
+<!--					</div>-->
+<!--				</div>-->
+				<div class="form-group">
+					<label class="control-label">
+						${text('归属部门')}：<i class="fa icon-question hide"></i></label>
+					<div class="control-inline">
+						<#form:treeselect id="DeptCode" title="${text('选择部门')}"
+						path="DeptCode" url="${ctx}/sys/office/treeData"
+						allowClear="true"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">
+						${text('责任人')}：<i class="fa icon-question hide"></i></label>
+					<div class="control-inline">
+						<#form:treeselect id="createBy" title="${text('选择责任人')}"
+						path="createBy" labelPath="createByName"
+						url="${ctx}/sys/office/treeData?isLoadUser=true"
+						allowClear="true"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('设备状态')}：</label>
+					<div class="control-inline" style="width: 80px">
+						<#form:select path="state" dictType="zb_device_state" blankOption="true" blankOptionLabel="全部" class="form-control" />
+					</div>
+				</div>
+<!--				<div class="form-group">-->
+<!--					<label class="control-label">${text('拥有者类型')}：</label>-->
+<!--					<div class="control-inline" style="width: 80px">-->
+<!--						<#form:select path="ownerType" dictType="zb_device_owner_type" blankOption="true" blankOptionLabel="全部" class="form-control" />-->
+<!--					</div>-->
+<!--				</div>-->
+<!--				<div class="form-group">-->
+<!--					<label class="control-label">${text('登记时间')}：</label>-->
+<!--					<div class="control-inline">-->
+<!--						<#form:input path="createDateStart" data-type="datetime" data-format="yyyy-MM-dd HH:mm" readonly="true" maxlength="30" class="form-control laydate width-datetime" placeholder="开始时间"/>-->
+<!--					</div>-->
+<!--					<span>-</span>-->
+<!--					<div class="control-inline">-->
+<!--						<#form:input path="createDateEnd" data-type="datetime" data-format="yyyy-MM-dd HH:mm" readonly="true" maxlength="30" class="form-control laydate width-datetime" placeholder="结束时间"/>-->
+<!--					</div>-->
+<!--				</div>-->
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script src="/js/static/js/chooseItems.js" type="application/javascript"></script>
+<script>
+	// 初始化DataGrid对象
+	$('#dataGrid').dataGrid({
+		searchForm: $("#searchForm"),
+		showCheckbox: true,
+		columnModel: [
+			{header:'${text("设备编码")}', name:'accountsCode', index:'a.accounts_code', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+				return '<a href="${ctx}/device/device_accounts/zbDeviceAccounts/form?id='+row.id+'" class="btnList" data-title="${text("查看设备登记")}">'+(val||row.id)+'</a>';
+			}},
+			// {header:'${text("设备编码")}', name:'deviceCode', index:'a.device_code', width:150, align:"left"},
+			{header:'${text("设备名称")}', name:'deviceName', index:'a.device_name', sortable: false, width:150, align:"left"},
+			{header:'${text("品牌")}', name:'brand', index:'a.manufacturer', sortable: false, width:150, align:"center"},
+			{header:'${text("规格")}', name:'spec', index:'a.spec', sortable: false, width:150, align:"center"},
+			{header:'${text("归属部门")}', name:'ownerOfficeName', index:'a.create_by', sortable: false, width:160, align:"center"},
+			{header:'${text("责任人")}', name:'ownerName', index:'a.owner_code', sortable: false, width:150, align:"center"},
+			{header:'${text("购置价格")}', name:'originalValue', index:'a.original_value', sortable: false, width:150, align:"center"},
+			{header:'${text("供应商")}', name:'manufacturer', index:'a.manufacturer', sortable: false, width:150, align:"center", formatter: function(val, obj, row, act){
+					return '合格供应商';
+			}},
+			{header:'${text("购入日期")}', name:'createDate', index:'a.create_date', width:150, align:"center", formatter:"date", formatoptions:{srcformat:'Y-m-d H:i:s', newformat:'Y-m-d'}},
+			{header:'${text("启用日期")}', name:'operateDate', index:'a.operate_date', width:150, align:"center", formatter:"date", formatoptions:{srcformat:'Y-m-d H:i:s', newformat:'Y-m-d'}},
+			// {header:'${text("设备类型")}', name:'deviceType', index:'a.device_type', sortable: false, width:100, align:"center", formatter: function(val, obj, row, act){
+			// 		return js.getDictLabel(${@DictUtils.getDictListJson('zb_device_type')}, val, '${text("未知")}', true);
+			// }},
+			{header:'${text("状态")}', name:'state', index:'a.state', width:80, align:"center", formatter: function(val, obj, row, act){
+					return js.getDictLabel(${@DictUtils.getDictListJson('zb_device_state')}, val, '${text("未知")}', true);
+			}},
+			// {header:'${text("拥有者类型")}', name:'ownerType', index:'a.owner_type', width:120, align:"center", formatter: function(val, obj, row, act){
+			// 		return js.getDictLabel(${@DictUtils.getDictListJson('zb_device_owner_type')}, val, '${text("未知")}', true);
+			// }},
+			// {header:'${text("拥有者名称")}', name:'ownerName', index:'a.owner_name', sortable: false, width:150, align:"left"},
+			// {header:'${text("登记人")}', name:'createByName', index:'a.create_by', width:100, align:"left"},
+			// {header:'${text("登记时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+			// {header:'${text("修改人")}', name:'updateByName', index:'a.update_by', width:100, align:"left"},
+			// {header:'${text("修改时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+			{header:'${text("操作")}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+				var actions = [];
+				<% if(hasPermi('device_accounts:zbDeviceAccounts:edit')){ %>
+					actions.push('<a href="${ctx}/device/device_accounts/zbDeviceAccounts/form?id='+row.id+'&ownerName='+row.ownerName+'" class="btnList" title="${text("编辑设备登记")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+					actions.push('<a href="javascript:void(0);" onclick="moveRecordList(\''+ row.id +'\')" title="${text("移交记录")}"><i class="glyphicon glyphicon-share-alt"></i></a>&nbsp;');
+					actions.push('<a href="javascript:void(0);" onclick="repairRecordList(\''+ row.id +'\')" title="${text("维修记录")}"><i class="glyphicon glyphicon-wrench"></i></a>&nbsp;');
+					if (row.ownerType == 1 && row.state == 1) {
+						actions.push('<a href="${ctx}/device/device_accounts/zbDeviceAccounts/delete?id='+row.id+'" class="btnList" title="${text("废弃台账")}" data-confirm="${text("确认要废弃该台账吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+						// actions.push('<a href="${ctx}/device_move/zbDeviceMove/form?deviceAccountsCode='+ row.accountsCode +'&deviceName='+ row.deviceName +'&deviceAccountsId='+ row.id +'" class="btnList" title="${text("快速移交")}"><i class="icon-login"></i></a>&nbsp;');
+					}
+				<% } %>
+				return actions.join('');
+			}}
+		],
+		// 加载成功后执行事件
+		ajaxSuccess: function(data){
+
+		}
+	});
+
+	// 移交记录按钮点击事件
+	function moveRecordList(rowId) {
+		var moveRecordColumn = function () {
+			var moveRecordColumn = [
+				{header:'主键', name:'id', hidden:true, editable:true},
+				{header:'${text("移交单号")}', name:'billCode', width:150, align:"left"},
+				{header:'${text("移交人")}', name:'moveName', width:150, align:"left"},
+				{header:'${text("接收人")}', name:'receiveName', width:150, align:"left"},
+				{header:'${text("移交时间")}', name:'createDate', width:150, align:"center"}
+			];
+
+			return moveRecordColumn;
+		};
+
+		// 组装查询参数
+		var searchParams = {};
+		searchParams.id = rowId;
+
+		// 弹框参数组装，弹出弹框
+		var options = {
+			tableId: 'moveRecordTable',
+			title: '设备变更记录',
+			url: '${ctx}/device_move/zbDeviceMove/move_record_list',
+			btnShow: false,
+			searchParams: searchParams,
+			columnModel: moveRecordColumn
+		};
+		// 打开弹框
+		chooseItems(options);
+	}
+
+	// 维修记录按钮点击事件
+	function repairRecordList(rowId) {
+		var repairRecordColumn = function () {
+			var repairRecordColumn = [
+				{header:'主键', name:'id', hidden:true, editable:true},
+				{header:'${text("维修申请单号")}', name:'billCode', width:150, align:"left"},
+				{header:'${text("维修申请人")}', name:'createByName', width:150, align:"left"},
+				{header:'${text("维修方式")}', name:'repairType', width:100, align:"center", formatter: function(val, obj, row, act){
+						return js.getDictLabel(${@DictUtils.getDictListJson('zb_device_repair_apply_type')}, val, '${text("未知")}', true);
+					}},
+				{header:'${text("维修单位名称")}', name:'repairUnitName', width:150, align:"left", formatter: function(val, obj, row, act){
+						if (row.repairType == 1) {
+							return "维修中心";
+						}
+						return row.repairUnitName || "";
+					}},
+				{header:'${text("故障描述")}', name:'errorText', width:150, align:"left"},
+				{header:'${text("维修结果")}', name:'repairResultType', width:100, align:"center", formatter: function(val, obj, row, act){
+						return js.getDictLabel(${@DictUtils.getDictListJson('zb_device_repair_result_type')}, val, '${text("未知")}', true);
+					}},
+				{header:'${text("维修时间")}', name:'createDate', width:150, align:"center"}
+			];
+
+			return repairRecordColumn;
+		};
+
+		// 组装查询参数
+		var searchParams = {};
+		searchParams.deviceAccountsId = rowId;
+
+		// 弹框参数组装，弹出弹框
+		var options = {
+			tableId: 'repairRecordTable',
+			title: '设备维修记录',
+			url: '${ctx}/device_repair/zbDeviceRepair/listData',
+			btnShow: false,
+			searchParams: searchParams,
+			columnModel: repairRecordColumn
+		}
+		// 打开弹框
+		chooseItems(options);
+	}
+</script>

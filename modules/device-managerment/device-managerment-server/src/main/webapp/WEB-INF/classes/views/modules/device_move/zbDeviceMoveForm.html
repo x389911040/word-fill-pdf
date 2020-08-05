@@ -1,0 +1,418 @@
+<% layout('/layouts/default.html', {title: '设备移交管理', libs: ['validate','dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa icon-note"></i> ${text(zbDeviceMove.isNewRecord ? '新增设备移交' : '编辑设备移交')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${zbDeviceMove}" action="${ctx}/device/device_move/zbDeviceMove/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="form-unit">${text('基本信息')}</div>
+				<#form:hidden path="id"/>
+				<input type="hidden" id="submitType" value="1"/>
+				<#form:hidden path="moveCode"/>
+				<#form:hidden path="moveDeptCode"/>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('移交单号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="billCode"  class="form-control required" defaultValue="${zbDeviceMove.billCode}" readonly="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('申请日期')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input class="form-control required" value="${@DateUtils.formatDate(zbDeviceMove.createDate,'yyyy-MM-dd')}" readonly="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('移交单位')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="moveDeptName"  class="form-control required" defaultValue="${zbDeviceMove.moveDeptName}" readonly="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('移交人')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="moveName"  class="form-control required" defaultValue="${zbDeviceMove.moveName}" readonly="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('接收单位')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="receiveDeptCode" title="${text('选择接收部门')}"
+								path="receiveDeptCode" labelPath="receiveDeptName"
+								url="${ctx}/sys/office/treeData"
+								class=" required" allowClear="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('接收人')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="receiveCode" title="${text('选择接收人')}"
+								path="receiveCode" labelPath="receiveName"
+								url="${ctx}/sys/office/treeData?isLoadUser=true"
+								class=" required" allowClear="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('移交原因')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="remarks" rows="4" maxlength="255" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+<!--				<div class="row">-->
+<!--					<div class="col-xs-6">-->
+<!--						<div class="form-group">-->
+<!--							<label class="control-label col-sm-4" title="">-->
+<!--								<span class="required hide">*</span> ${text('状态；1')}：<i class="fa icon-question hide"></i></label>-->
+<!--							<div class="col-sm-8">-->
+<!--								<#form:input path="state" maxlength="1" class="form-control digits"/>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+				<h4 class="form-unit">${text('设备移交单明细')}</h4>
+				<span class="btn btn-sm btn-primary"style="margin-left: 10px; margin-bottom: 20px" id="chooseItems">选择设备台账</span>
+				<div class="ml10 mr10">
+					<table id="zbDeviceMoveItemDataGrid"></table>
+<!--					<% if (hasPermi('device_move:zbDeviceMove:edit')){ %>-->
+<!--						<a href="#" id="zbDeviceMoveItemDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('增行')}</a>-->
+<!--					<% } %>-->
+				</div>
+				<div id="auditTextShow" style="display: none">
+					<h4 class="form-unit">${text('审批信息')}</h4>
+					<div class="row">
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required ">*</span> ${text('移交人审批意见')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:textarea path="moveText" rows="2" maxlength="255" class="form-control" readOnly="true"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required ">*</span> ${text('移交部门领导审批意见')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:textarea path="moveLeaderText" rows="2" maxlength="255" class="form-control" readOnly="true"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required ">*</span> ${text('接收人审批意见')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:textarea path="receiveText" rows="2" maxlength="255" class="form-control" readOnly="true"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required ">*</span> ${text('接收部门领导审批意见')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:textarea path="receiveLeaderText" rows="2" maxlength="255" class="form-control" readOnly="true"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label class="control-label col-sm-2" title="">
+									<span class="required hide">*</span> ${text('业务部门审批意见')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-10">
+									<#form:textarea path="businessText" rows="2" maxlength="255" class="form-control" readOnly="true"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('device_move:zbDeviceMove:edit')){ %>
+							<span class="btn btn-sm" style="background-color: #00c0ef; color: #fff" id="btnSave"><i class="fa fa-check"></i> ${text('保存为草稿')}</span>&nbsp;&nbsp;
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script src="/js/static/js/chooseItems.js" type="application/javascript"></script>
+<script>
+	var moveModel = ${toJson(zbDeviceMove)} || {};
+	var moveItems = moveModel.zbDeviceMoveItemList || [];
+	// 明细是否可编辑
+	var itemTableEdit = true;
+
+	// 已审核单据查看
+	if (moveModel.state == 1 || moveModel.state == 2) {
+		// 已审核单据只能查看
+		itemTableEdit = false;
+		// 备注信息不可编辑
+		$("#remarks").attr("readOnly", "readOnly");
+		// 选择设备及提交按钮隐藏
+		$("#chooseItems").hide();
+		$("#btnSubmit").hide();
+		$("#btnSave").hide();
+
+		if (moveModel.state == 2) {
+			$("#auditTextShow").show();
+		}
+	}
+
+	//初始化设备移交单明细DataGrid对象
+	$("#zbDeviceMoveItemDataGrid").dataGrid({
+
+		data: moveItems,
+		datatype: "local", // 设置本地数据
+		autoGridHeight: function(){return 'auto'}, // 设置自动高度
+
+		// 设置数据表格列
+		columnModel: [
+			{header:'状态', name:'status', editable:true, hidden:true},
+			{header:'主键', name:'id', editable:true, hidden:true},
+			{header:'${text("移交单主键Id")}', name:'deviceMoveId.id', editable:true, hidden:true},
+			{header:'${text("设备台账Id")}', name:'deviceAccountsId', editable:true, hidden:true},
+			{header:'${text("设备编码")}', name:'accountsCode', width:150},
+			{header:'${text("设备名称")}', name:'deviceName', width:150},
+			{header:'${text("设备型号")}', name:'unitType', width:150},
+			{header:'${text("设备规格")}', name:'spec', width:150},
+			{header:'${text("供应商")}', name:'manufacturer', width:150},
+			{header:'${text("位置")}', name:'location', width:150},
+			// {header:'${text("移交数量")}', name:'num', width:150, editable:true, edittype:'text', editoptions:{'class':'form-control required digits'}},
+			{header:'${text("操作")}', name:'actions', width:80, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+				var actions = [];
+				if (moveModel.state == 1 || moveModel.state== 2) {
+					return '';
+				}
+
+				if (row.isNewRecord == false){
+					actions.push('<a href="#" onclick="js.confirm(\'${text("你确认要删除这条数据吗？")}\', function(){$(\'#zbDeviceMoveItemDataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				}else{
+					actions.push('<a href="#" onclick="js.confirm(\'${text("你确认要删除这条数据吗？")}\', function(){$(\'#zbDeviceMoveItemDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				}
+				return actions.join('');
+			}, editoptions: {defaultValue: 'new'}}
+		],
+
+		// 编辑表格参数
+		editGrid: itemTableEdit,				// 是否是编辑表格
+		editGridInitRowNum: 0,		// 编辑表格的初始化新增行数
+		// editGridAddRowBtn: $('#zbDeviceMoveItemDataGridAddRowBtn'),	// 子表增行按钮
+		// editGridAddRowInitData: {id: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+
+		// 编辑表格的提交数据参数
+		editGridInputFormListName: 'zbDeviceMoveItemList', // 提交的数据列表名
+		editGridInputFormListAttrs: 'id,deviceAccountsId,status', // 提交数据列表的属性字段
+
+		// 加载成功后执行事件
+		ajaxSuccess: function(data){
+
+		}
+	});
+
+	// $('#zbDeviceMoveItemDataGrid').dataGrid('updateListFieldName', 'zbDeviceMoveItemList', 'id,deviceAccountsId,deviceAccountsCode');
+
+	// 组装数据去列表
+	var assembleDataToItems = function (checkData) {
+		if (moveItems.length == 0) {
+			checkData.forEach(function (data, index) {
+				data.deviceAccountsId = data.id;
+				delete data.id;
+				moveItems.push(data);
+			});
+		} else {
+			checkData.forEach(function (data, index) {
+				var existIdx = undefined;
+				moveItems.forEach(function (value, index) {
+					if (data.id == value.deviceAccountsId) {
+						existIdx = index;
+					}
+				});
+
+				if (existIdx == undefined) {
+					data.deviceAccountsId = data.id;
+					delete data.id;
+					moveItems.push(data);
+				}
+			});
+		}
+
+		$("#zbDeviceMoveItemDataGrid").jqGrid('setGridParam', { data: moveItems});
+		$("#zbDeviceMoveItemDataGrid").trigger('reloadGrid');
+	};
+
+	// 填入明细数据校验
+	// function checkDataToItems(checkData) {
+	// 	if (!checkData || checkData.length == 0) {
+	// 		layer.msg("请选择行");
+	// 		return false;
+	// 	}
+	// }
+
+	var searchColumnModel = function () {
+		var colunmModels = [
+			{header:'主键', name:'id', hidden:true},
+			{header:'${text("台账编码")}', name:'accountsCode', width:150},
+			{header:'${text("设备名称")}', name:'deviceName', width:150},
+			{header:'${text("品牌")}', name:'brand', width:150},
+			{header:'${text("型号")}', name:'unitType', width:150},
+			{header:'${text("规格")}', name:'spec', width:150},
+			{header:'${text("供应商")}', name:'manufacturer', width:150},
+			{header:'${text("位置")}', name:'location', width:150, hidden: true}
+		];
+
+		return colunmModels;
+	};
+
+	// 选择设备台账按钮
+	$("#chooseItems").click(function () {
+		// 请求参数
+		var searchParams = {
+			"state": "1"
+		};
+		// 弹框参数组装，弹出弹框
+		var options = {
+			title: '选择设备台账',
+			url: '${ctx}/device/device_accounts/zbDeviceAccounts/listData',
+			// checkDataMethod: checkDataToItems(),
+			searchParams: searchParams,
+			assembleMethod: assembleDataToItems,
+			columnModel: searchColumnModel
+		}
+		// 打开弹框
+		chooseItems(options);
+	});
+
+	/**
+	 * 删除明细数据
+	 */
+	// var deleteItem = function(rowId) {
+	// 	js.confirm('你确认要删除这条数据吗？', function(){
+	// 		$('#zbDeviceMoveItemDataGrid').dataGrid('setRowData',rowId,null,{display:'none'});
+	// 		$('#'+ rowId +'_status').val(Global.STATUS_DELETE);
+	// 		if (moveModel.isNewRecord) {
+	// 			moveItems.splice(parseInt(rowId)-1);
+	// 		} else {
+	// 			var existIdx = undefined;
+	// 			moveItems.forEach(function (value, idx) {
+	// 				if (value.id == rowId) {
+	// 					existIdx = idx;
+	// 				}
+	// 			});
+	//
+	// 			if (existIdx || existIdx == 0) {
+	// 				moveItems.splice(existIdx);
+	// 			}
+	// 		}
+	// 	});
+	// 	return false;
+	// }
+
+	// 保存为草稿
+	$("#btnSave").click(function () {
+		$("#submitType").attr("name", "submitType");
+		$("#inputForm").submit();
+	});
+</script>
+<script>
+	$("#inputForm").validate({
+		submitHandler: function(form){
+			js.ajaxSubmitForm($(form), function(data){
+				js.showMessage(data.message);
+				if(data.result == Global.TRUE){
+					js.closeCurrentTabPage(function(contentWindow){
+						contentWindow.page();
+					});
+				}
+			}, "json");
+			// var e = layer.load(0);
+			// var params = $(form).serializeArray();
+			// if (moveItems.length == 0) {
+			// 	layer.msg("移交单明细不能为空");
+			// 	layer.close(e);
+			// 	return false;
+			// }
+			//
+			// moveItems.forEach(function (item, idx) {
+			// 	delete item.deviceName;
+			// 	for(var key in item){
+			// 		var tempObj = {};
+			// 		tempObj.name = "zbDeviceMoveItemList["+ idx +"]." + key;
+			// 		tempObj.value = item[key];
+			//
+			// 		params.push(tempObj);
+			// 	}
+			// });
+			//
+			// // layer.close(e);
+			// // return false;
+			//
+			// jQuery.ajax({
+			// 	url: "${ctx}/device_move/zbDeviceMove/save",
+			// 	type: "POST",
+			// 	dataType: "json",
+			// 	data: params,
+			// 	async:true,
+			// 	success:function(data){
+			// 		layer.close(e);
+			// 		js.showMessage(data.message);
+			// 		if (data.result == Global.TRUE) {
+			// 			js.closeCurrentTabPage(function(contentWindow){
+			// 				contentWindow.page();
+			// 			});
+			// 		}
+			// 	},
+			// 	error:function(error){
+			// 		layer.close(e);
+			// 		layer.msg("网络错误");
+			// 	}
+			// });
+		}
+	});
+</script>

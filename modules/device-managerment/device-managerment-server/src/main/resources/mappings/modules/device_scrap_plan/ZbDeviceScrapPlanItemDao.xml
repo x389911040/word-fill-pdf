@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rd.modules.device_scrap_plan.dao.ZbDeviceScrapPlanItemDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="ZbDeviceScrapPlanItem">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+
+	<select id="findListById" resultType="ZbDeviceScrapPlanItem" parameterType="ZbDeviceScrapPlan">
+		SELECT
+			zdspi.id AS id,
+			zdspi.device_accounts_id AS deviceAccountsId,
+			zda.accounts_code AS accountsCode,
+			zda.device_name AS deviceName,
+			zda.unit_type AS unitType,
+			zda.spec AS spec,
+			zda.manufacturer AS manufacturer,
+			zda.location AS location
+		FROM
+			`zb_device_scrap_plan_item` zdspi
+			INNER JOIN zb_device_accounts zda
+				ON zda.id = zdspi.device_accounts_id
+		<where>
+			<if test="id != null and id != ''">
+				zdspi.scrap_plan_id = #{id}
+			</if>
+		</where>
+	</select>
+</mapper>

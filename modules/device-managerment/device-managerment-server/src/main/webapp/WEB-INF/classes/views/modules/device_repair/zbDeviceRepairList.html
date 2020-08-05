@@ -1,0 +1,134 @@
+<% layout('/layouts/default.html', {title: '维修单管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> ${text('维修单管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('device_repair:zbDeviceRepair:edit')){ %>
+					<a href="${ctx}/device/device_repair/zbDeviceRepair/form" class="btn btn-default btnTool" title="${text('新增维修单')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+				<div class="btn-group">
+					<a href="javascript:" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-navicon"></i> <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="javascript:" id="btnExport"><i class="glyphicon glyphicon-export"></i> ${text('导出')}</a></li>
+						<li><a href="javascript:" id="btnImport"><i class="glyphicon glyphicon-import"></i> ${text('导入')}</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="box-header">
+			<span class="btn btn-primary" id="repairInner">院内维修</span>
+			<span class="btn btn-default" id="repairOuter">外送维修</span>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${zbDeviceRepair}" action="${ctx}/device/device_repair/zbDeviceRepair/listData" method="post" class="form-inline"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('申请单编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="billCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+				<input type="hidden" id="searchInner" name="searchInner"/>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+	// 默认查询院内维修单据
+	var choseSign = true;
+	$("#repairInner").click(function () {
+		choseSign = true;
+		$("#repairOuter").attr("class", "btn btn-default");
+		$("#repairInner").attr("class", "btn btn-primary");
+		$("#searchInner").val("1");
+
+		initListTable();
+	});
+
+	$("#repairOuter").click(function () {
+		choseSign = false;
+		$("#repairInner").attr("class", "btn btn-default");
+		$("#repairOuter").attr("class", "btn btn-primary");
+		$("#searchInner").val("2");
+
+		initListTable();
+	});
+
+	/**
+	 * 获取列表列数据
+	 */
+	function getColumnModel() {
+		var initColumnModelArr = [
+			{header:'${text("维修单号")}', name:'billCode', index:'a.bill_code', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+					return '<a href="${ctx}/device/device_repair/zbDeviceRepair/form?id='+row.id+'" class="btnList" data-title="${text("编辑维修单")}">'+(val||row.id)+'</a>';
+				}},
+			{header:'${text("维修申请单号")}', name:'repairApplyCode', index:'a.repair_apply_item_id', width:150, align:"left"},
+			{header:'${text("设备编码")}', name:'deviceAccountsCode', index:'a.device_accounts_id', width:150, align:"left"},
+			{header:'${text("设备名称")}', name:'deviceName', index:'a.device_accounts_id', width:150, align:"left"},
+			{header:'${text("责任人")}', name:'createByName', index:'a.create_by', width:120, align:"center"},
+			{header:'${text("归属部门")}', name:'createDeptName', index:'a.create_by', width:120, align:"center"},
+			{header:'${text("诊断结果")}', name:'repairResultType', index:'a.repair_result_type', width:100, align:"center", formatter: function(val, obj, row, act){
+					return js.getDictLabel(${@DictUtils.getDictListJson('zb_device_repair_result_type')}, val, '${text("")}', true);
+				}},
+			{header:'${text("单据状态")}', name:'state', index:'a.state', width:100, align:"center", formatter: function(val, obj, row, act){
+					return js.getDictLabel(${@DictUtils.getDictListJson('zb_device_repair_state')}, val, '${text("未知")}', true);
+				}},
+			{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+			{header:'${text("操作")}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+					var actions = [];
+				<% if(hasPermi('device_repair:zbDeviceRepair:edit')){ %>
+						if (row.state == 1) {
+							actions.push('<a href="${ctx}/device/device_repair/zbDeviceRepair/form?id='+row.id+'" class="btnList" title="${text("交接")}"><i class="icon-people"></i></a>&nbsp;');
+						} else if (row.state == 2) {
+							actions.push('<a href="${ctx}/device/device_repair/zbDeviceRepair/form?id='+row.id+'" class="btnList" title="${text("诊断")}"><i class="icon-eyeglass"></i></a>&nbsp;');
+						} else if (row.state == 3 || row.state == 0){
+							actions.push('<a href="${ctx}/device/device_repair/zbDeviceRepair/form?id='+row.id+'" class="btnList" title="${text("确认维修结果")}"><i class="icon-check"></i></a>&nbsp;');
+						}
+					<% } %>
+					return actions.join('');
+				}}
+		];
+
+		if (choseSign) {
+			// 院内维修
+			var model = {header:'${text("维修人")}', name:'repairName', index:'a.repair_code', width:120, align:"center"};
+			initColumnModelArr.splice(6, 0, model);
+		} else {
+			// 外送维修
+			var model = {header:'${text("维修中心")}', name:'repairUnitName', index:'a.repair_unit_name', width:120, align:"center"};
+			initColumnModelArr.splice(6, 1, model);
+		}
+
+		return initColumnModelArr;
+	}
+
+	// 初始化DataGrid对象
+	function initListTable() {
+		// 卸载表头,重新加载数据
+		$("#dataGrid").jqGrid("GridUnload");
+
+		$('#dataGrid').dataGrid({
+			searchForm: $("#searchForm"),
+			columnModel: getColumnModel(),
+			// 加载成功后执行事件
+			ajaxSuccess: function(data){
+
+			}
+		});
+	}
+
+	initListTable();
+</script>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rd.modules.device_info.dao.ZbDeviceDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="ZbDeviceAccounts">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+
+	<select id="findSpecPage" resultType="ZbDeviceSpec">
+		SELECT
+			a.id AS id,
+			zd.device_code AS deviceCode,
+			zd.device_name AS deviceName,
+			zd.device_type AS deviceType
+		FROM
+			`zb_device_spec` a
+			INNER JOIN zb_device zd
+				ON zd.id = a.device_id
+	</select>
+
+	<select id="findSpecCount" resultType="Long">
+		SELECT
+			COUNT(a.id)
+		FROM
+			`zb_device_spec` a
+			INNER JOIN zb_device zd
+				ON zd.id = a.device_id
+	</select>
+
+	<select id="getDeviceSpecDetailById" resultType="ZbDeviceSpec" parameterType="String">
+		SELECT
+			zds.id AS id,
+			zd.device_code AS deviceCode,
+			zd.device_name AS deviceName,
+			zd.device_type AS deviceType
+		FROM
+			zb_device_spec zds
+			INNER JOIN zb_device zd
+				ON zds.device_id = zd.id
+		<where>
+			zds.id = #{value}
+		</where>
+	</select>
+
+	<select id="findPage" resultType="ZbDevice" parameterType="ZbDevice">
+		SELECT
+			zd.id AS id,
+			zd.device_name AS deviceName,
+			zd.unit_type AS unitType,
+			zd.spec AS spec,
+			zd.brand AS brand
+		FROM
+			`zb_device` zd
+		<where>
+			<if test="deviceName != null and deviceName != ''">
+				zd.device_name LIKE '%${deviceName}%'
+			</if>
+		</where>
+	</select>
+
+</mapper>

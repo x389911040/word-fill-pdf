@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rd.modules.device_free.dao.ZbDeviceFreeItemDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="ZbDeviceFreeItem">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+
+	<select id="findListById" resultType="ZbDeviceFreeItem" parameterType="ZbDeviceFree">
+		SELECT
+			zdfi.id AS id,
+			zdfi.device_accounts_id AS deviceAccountsId,
+			zdfi.remarks AS remarks,
+			zda.accounts_code AS accountsCode,
+			zda.device_name AS deviceName,
+			zda.unit_type AS unitType,
+			zda.spec AS spec
+		FROM
+			`zb_device_free_item` zdfi
+			INNER JOIN zb_device_accounts zda
+				ON zda.id = zdfi.device_accounts_id
+		<where>
+			<if test="id != null and id != ''">
+				zdfi.free_id = #{id}
+			</if>
+		</where>
+	</select>
+</mapper>

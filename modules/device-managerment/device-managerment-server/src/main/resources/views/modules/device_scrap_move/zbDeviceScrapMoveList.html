@@ -1,0 +1,90 @@
+<% layout('/layouts/default.html', {title: '报废处置移交单管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> ${text('报废处置移交单管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('device_scrap_move:zbDeviceScrapMove:edit')){ %>
+					<a href="${ctx}/device/device_scrap_move/zbDeviceScrapMove/form" class="btn btn-default btnTool" title="${text('新增报废处置移交单')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${zbDeviceScrapMove}" action="${ctx}/device/device_scrap_move/zbDeviceScrapMove/listData" method="post" class="form-inline"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('单据编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="billCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('设备编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="accountsCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('设备名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="deviceName" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+<!--				<div class="form-group">-->
+<!--					<label class="control-label">${text('状态')}：</label>-->
+<!--					<div class="control-inline">-->
+<!--						<#form:input path="state" maxlength="1" class="form-control width-120"/>-->
+<!--					</div>-->
+<!--				</div>-->
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("申请单编号")}', name:'billCode', index:'a.bill_code', width:200, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/device/device_scrap_move/zbDeviceScrapMove/form?id='+row.id+'" class="btnList" data-title="${text("编辑报废处置移交单")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("设备编码")}', name:'accountsCode', width:150, align:"center"},
+		{header:'${text("设备名称")}', name:'deviceName', width:150, align:"center"},
+		{header:'${text("型号")}', name:'unitType', width:150, align:"center"},
+		{header:'${text("规格")}', name:'spec', width:150, align:"center"},
+		{header:'${text("状态")}', name:'state', index:'a.state', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('zb_device_scrap_move_state')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("创建者")}', name:'createByName', index:'a.create_by', width:150, align:"left"},
+		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		// {header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text("操作")}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('device_scrap_move:zbDeviceScrapMove:edit')){ %>
+				actions.push('<a href="${ctx}/device/device_scrap_move/zbDeviceScrapMove/form?id='+row.id+'" class="btnList" title="${text("编辑报废处置移交单")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+
+				if (row.state == 0){
+					actions.push('<a href="${ctx}/device/device_scrap_move/zbDeviceScrapMove/form?id='+row.id+'" class="btnList" title="${text("确认")}"><i class="icon-check"></i></a>&nbsp;');
+				}
+
+				actions.push('<a href="${ctx}/device/device_scrap_move/zbDeviceScrapMove/delete?id='+row.id+'" class="btnList" title="${text("删除报废处置移交单")}" data-confirm="${text("确认要删除该报废处置移交单吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

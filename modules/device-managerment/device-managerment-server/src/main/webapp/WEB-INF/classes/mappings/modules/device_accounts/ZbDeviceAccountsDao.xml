@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rd.modules.device_accounts.dao.ZbDeviceAccountsDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="ZbDeviceAccounts">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+
+	<select id="findPage" parameterType="ZbDeviceAccounts" resultType="ZbDeviceAccounts">
+		SELECT
+			a.id AS Id,
+			a.accounts_code AS accountsCode,
+			a.manufacturer AS manufacturer,
+			a.brand AS brand,
+			a.spec AS spec,
+			a.location AS location,
+			a.produce_date AS produceDate,
+			a.operate_date AS operateDate,
+			a.produce_code AS produceCode,
+			a.original_value AS originalValue,
+			a.create_by AS createBy,
+			a.device_name AS deviceName,
+			a.unit_type AS unitType,
+			a.state AS state,
+			a.owner_type AS ownerType,
+			a.owner_code AS ownerCode,
+			jsu.user_name AS createByName,
+			a.create_date AS createDate,
+			jsu1.user_name AS updateByName,
+			a.update_date AS updateDate,
+			jsu2.user_name AS ownerName
+		FROM
+			zb_device_accounts a
+			INNER JOIN js_sys_user jsu
+				ON jsu.user_code = a.create_by
+			INNER JOIN js_sys_user jsu1
+				ON jsu1.user_code = a.update_by
+			INNER JOIN js_sys_user jsu2
+				ON jsu2.user_code = a.owner_code
+		<where>
+			<if test="accountsCode != null and accountsCode != ''">
+				AND a.accounts_code = #{accountsCode}
+			</if>
+			<if test="deviceName != null and deviceName != ''">
+				AND a.device_name LIKE '%${deviceName}%'
+			</if>
+			<if test="state != null and state != ''">
+				AND a.state = #{state}
+			</if>
+			<if test="ownerType != null and ownerType != ''">
+				AND a.owner_type = #{ownerType}
+			</if>
+			<if test="createDateStart != null and createDateStart != ''">
+				AND a.create_date &gt;= #{createDateStart}
+			</if>
+			<if test="createDateEnd != null and createDateEnd != ''">
+				AND a.create_date &lt; #{createDateEnd}
+			</if>
+			<choose>
+				<when test="searchScrapSign == 1">
+					AND a.status = 1
+				</when>
+				<otherwise>
+					AND a.status = 0
+				</otherwise>
+			</choose>
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select>
+
+	<select id="getLastDeviceSortCode" resultType="ZbDeviceAccounts">
+		SELECT
+			accounts_code AS accountsCode
+		FROM
+			`zb_device_accounts`
+		ORDER BY
+			accounts_code DESC
+		LIMIT 1
+	</select>
+</mapper>

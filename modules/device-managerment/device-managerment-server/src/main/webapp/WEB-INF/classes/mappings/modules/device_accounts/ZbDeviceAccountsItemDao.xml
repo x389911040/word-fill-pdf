@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rd.modules.device_accounts.dao.ZbDeviceAccountsItemDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="ZbDeviceAccounts">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+
+	<select id="findItemsById" resultType="ZbDeviceAccountsItem" parameterType="ZbDeviceAccounts">
+		SELECT
+			a.`id` AS "id",
+			a.`device_accounts_id` AS "deviceAccountsId.id",
+			a.`device_name` AS "deviceName",
+			a.`manufacturer` AS "manufacturer",
+			a.`unit_type` AS "unitType",
+			a.`spec` AS "spec",
+			a.`num` AS "num",
+			a.`description` AS "description",
+			a.`create_by` AS "createBy",
+			a.`create_date` AS "createDate",
+			a.`update_by` AS "updateBy",
+			a.`update_date` AS "updateDate",
+			a.`remarks` AS "remarks"
+		FROM
+			`zb_device_accounts_item` a
+		WHERE
+			<if test="id != null and id != ''">
+				a.`device_accounts_id` = #{id}
+			</if>
+	</select>
+</mapper>

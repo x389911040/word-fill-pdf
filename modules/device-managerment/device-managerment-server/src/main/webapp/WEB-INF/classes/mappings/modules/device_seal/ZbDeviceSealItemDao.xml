@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rd.modules.device_seal.dao.ZbDeviceSealItemDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="ZbDeviceSealItem">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+
+	<select id="findListById" resultType="ZbDeviceSealItem" parameterType="ZbDeviceSeal">
+		SELECT
+			zdsi.id AS id,
+			zdsi.device_accounts_id AS deviceAccountsId,
+			zdsi.remarks AS remarks,
+			zda.accounts_code AS accountsCode,
+			zda.device_name AS deviceName,
+			zda.unit_type AS unitType,
+			zda.spec AS spec
+		FROM
+			`zb_device_seal_item` zdsi
+			INNER JOIN zb_device_accounts zda
+				ON zda.id = zdsi.device_accounts_id
+		<where>
+			<if test="id != null and id != ''">
+				zdsi.seal_id = #{id}
+			</if>
+		</where>
+	</select>
+</mapper>

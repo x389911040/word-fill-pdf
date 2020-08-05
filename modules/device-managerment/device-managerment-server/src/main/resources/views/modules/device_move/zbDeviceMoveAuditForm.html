@@ -1,0 +1,210 @@
+<% layout('/layouts/default.html', {title: '设备移交管理', libs: ['validate','dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa icon-note"></i> ${text('审核移交单')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${zbDeviceMove}" action="${ctx}/device/device_move/zbDeviceMove/audit" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="form-unit">${text('基本信息')}</div>
+				<#form:hidden path="id"/>
+				<#form:hidden path="moveCode" defaultValue="${zbDeviceMove.moveCode}"/>
+				<#form:hidden path="receiveDeptCode" defaultValue="${zbDeviceMove.receiveDeptCode}"/>
+				<#form:hidden path="receiveCode" defaultValue="${zbDeviceMove.receiveCode}"/>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('移交单号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="billCode"  class="form-control required" defaultValue="${zbDeviceMove.billCode}" readonly="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('移交人')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="moveName"  class="form-control required" defaultValue="${zbDeviceMove.moveName}" readonly="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('接收部门')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="receiveDeptName"  class="form-control required" readonly="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('接收人')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="receiveName"  class="form-control required" readonly="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('移交原因')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="remarks" rows="4" maxlength="255" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<h4 class="form-unit">${text('设备移交单明细')}</h4>
+				<div class="ml10 mr10">
+					<table id="zbDeviceMoveItemDataGrid"></table>
+					<!--					<% if (hasPermi('device_move:zbDeviceMove:edit')){ %>-->
+					<!--						<a href="#" id="zbDeviceMoveItemDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('增行')}</a>-->
+					<!--					<% } %>-->
+				</div>
+				<h4 class="form-unit">${text('审批信息')}</h4>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('移交人审批意见')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:textarea path="moveText" rows="2" maxlength="255" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('移交部门领导审批意见')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:textarea path="moveLeaderText" rows="2" maxlength="255" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('接收人审批意见')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:textarea path="receiveText" rows="2" maxlength="255" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('接收部门领导审批意见')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:textarea path="receiveLeaderText" rows="2" maxlength="255" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('业务部门审批意见')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="businessText" rows="2" maxlength="255" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+<!--				<div class="row">-->
+<!--					<div class="col-xs-6">-->
+<!--						<div class="form-group">-->
+<!--							<label class="control-label col-sm-4" title="">-->
+<!--								<span class="required hide">*</span> ${text('状态；1')}：<i class="fa icon-question hide"></i></label>-->
+<!--							<div class="col-sm-8">-->
+<!--								<#form:input path="state" maxlength="1" class="form-control digits"/>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('device_move:zbDeviceMove:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('审 核')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+	var movieModel = ${toJson(zbDeviceMove)} || {};
+	var moveItems = movieModel.zbDeviceMoveItemList || [];
+
+	//初始化设备移交单明细DataGrid对象
+	$("#zbDeviceMoveItemDataGrid").dataGrid({
+
+		data: moveItems,
+		datatype: "local", // 设置本地数据
+		autoGridHeight: function(){return 'auto'}, // 设置自动高度
+
+		// 设置数据表格列
+		columnModel: [
+			{header:'状态', name:'status', editable:true, hidden:true},
+			{header:'主键', name:'id', editable:true, hidden:true},
+			{header:'${text("移交单主键Id")}', name:'deviceMoveId.id', editable:true, hidden:true},
+			{header:'${text("设备台账Id")}', name:'deviceAccountsId', editable:true, hidden:true},
+			{header:'${text("设备编码")}', name:'accountsCode', width:150},
+			{header:'${text("设备名称")}', name:'deviceName', width:150},
+			{header:'${text("设备型号")}', name:'unitType', width:150},
+			{header:'${text("设备规格")}', name:'spec', width:150},
+			{header:'${text("供应商")}', name:'manufacturer', width:150},
+			{header:'${text("位置")}', name:'location', width:150}
+		],
+
+		// 编辑表格参数
+		editGrid: false,				// 是否是编辑表格
+		// editGridInitRowNum: 1,		// 编辑表格的初始化新增行数
+		// editGridAddRowBtn: $('#zbDeviceMoveItemDataGridAddRowBtn'),	// 子表增行按钮
+		// editGridAddRowInitData: {id: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+
+		// 编辑表格的提交数据参数
+		editGridInputFormListName: 'zbDeviceMoveItemList', // 提交的数据列表名
+		editGridInputFormListAttrs: 'id,deviceAccountsId,status', // 提交数据列表的属性字段
+
+		// 加载成功后执行事件
+		ajaxSuccess: function(data){
+
+		}
+	});
+</script>
+<script>
+$("#inputForm").validate({
+	submitHandler: function(form){
+		js.ajaxSubmitForm($(form), function(data){
+			js.showMessage(data.message);
+			if(data.result == Global.TRUE){
+				js.closeCurrentTabPage(function(contentWindow){
+					contentWindow.page();
+				});
+			}
+		}, "json");
+    }
+});
+</script>

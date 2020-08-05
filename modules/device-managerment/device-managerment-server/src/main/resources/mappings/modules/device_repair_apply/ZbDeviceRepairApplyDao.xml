@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rd.modules.device_repair_apply.dao.ZbDeviceRepairApplyDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="ZbDeviceRepairApply">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+
+	<select id="findPage" resultType="ZbDeviceRepairApply">
+		SELECT
+			a.id AS Id,
+			a.bill_code AS billCode,
+			a.`state` AS state,
+			jsu1.user_name AS createByName,
+			a.create_date AS createDate,
+			jsu2.user_name AS updateByName,
+			a.update_date AS updateDate
+		FROM
+			`zb_device_repair_apply` a
+			INNER JOIN js_sys_user jsu1
+				ON jsu1.user_code = a.create_by
+			INNER JOIN js_sys_user jsu2
+				ON jsu2.user_code = a.update_by
+		<where>
+			<if test="billCode != null and billCode != ''">
+				AND a.bill_code = #{billCode}
+			</if>
+			<if test="state != null and state != ''">
+				AND a.state = #{state}
+			</if>
+		</where>
+		ORDER BY
+		${sqlMap.order.toSql()}
+	</select>
+	
+</mapper>

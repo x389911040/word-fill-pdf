@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rd.modules.device_seal.dao.ZbDeviceSealDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="ZbDeviceSeal">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+
+	<select id="findPage" resultType="ZbDeviceSeal" parameterType="ZbDeviceSeal">
+		SELECT
+			a.id AS id,
+			a.bill_code AS billCode,
+			jsu.user_name AS createByName,
+			jsu1.user_name AS updateByName,
+			jsu2.user_name AS auditByName,
+			a.create_date AS createDate,
+			a.update_date AS updateDate,
+			a.audit_date AS auditDate,
+			a.state AS state
+		FROM
+			zb_device_seal a
+			INNER JOIN js_sys_user jsu
+				ON jsu.user_code = a.create_by
+			INNER JOIN js_sys_user jsu1
+				ON jsu1.user_code = a.update_by
+			LEFT JOIN js_sys_user jsu2
+				ON jsu2.user_code = a.audit_by
+		<where>
+			<if test="sealType != null and sealType != ''">
+				a.seal_type = #{sealType}
+			</if>
+			<if test="billCode != null and billCode != ''">
+				a.bill_code = #{billCode}
+			</if>
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select>
+</mapper>

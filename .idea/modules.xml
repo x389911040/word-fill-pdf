@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-client/device-managerment-client.iml" filepath="$PROJECT_DIR$/modules/device-managerment/device-managerment-client/device-managerment-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/device-managerment-server.iml" filepath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/device-managerment-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gateway/jeesite-cloud-gateway.iml" filepath="$PROJECT_DIR$/gateway/jeesite-cloud-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent/jeesite-cloud-parent.iml" filepath="$PROJECT_DIR$/parent/jeesite-cloud-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/root/jeesite-cloud-root.iml" filepath="$PROJECT_DIR$/root/jeesite-cloud-root.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zipkin/jeesite-cloud-zipkin.iml" filepath="$PROJECT_DIR$/zipkin/jeesite-cloud-zipkin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modules/core/core/zb-modules-core.iml" filepath="$PROJECT_DIR$/modules/core/core/zb-modules-core.iml" />
+    </modules>
+  </component>
+</project>

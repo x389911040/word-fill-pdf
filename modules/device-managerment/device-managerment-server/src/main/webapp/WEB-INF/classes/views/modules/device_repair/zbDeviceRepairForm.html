@@ -1,0 +1,346 @@
+<% layout('/layouts/default.html', {title: '维修单管理', libs: ['validate','fileupload']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa icon-note"></i> ${text(zbDeviceRepair.isNewRecord ? '新增维修单' : '编辑维修单')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${zbDeviceRepair}" action="${ctx}/device/device_repair/zbDeviceRepair/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="form-unit">${text('基本信息')}</div>
+				<#form:hidden path="id"/>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('设备维修单号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="billCode" maxlength="64" class="form-control required" readOnly="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('维修申请单号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="repairApplyCode" maxlength="64" class="form-control required" readOnly="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('设备编号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="deviceAccountsCode" maxlength="64" class="form-control required"  readOnly="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required">*</span> ${text('设备名称')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="deviceName" maxlength="64" class="form-control"  readOnly="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('型号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="unitType" maxlength="64" class="form-control required"  readOnly="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required">*</span> ${text('规格')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="spec" maxlength="64" class="form-control"  readOnly="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('归属单位')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="createDeptName" maxlength="64" class="form-control required" readOnly="true" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('责任人')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="createByName" maxlength="64" class="form-control required" readOnly="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('故障描述')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="errorText" rows="4" maxlength="255" class="form-control" placeholder="填写设备的故障描述。。。"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="handoverInfoShow">
+					<div class="form-unit">${text('设备交接单')} <div class="btn btn-sm btn-primary" style="float:right; margin-right: 60px" id="downloadHandoverBtn"><i class="icon-cloud-download"></i>下载设备交接单</div></div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label class="control-label col-sm-2">${text('设备交接单')}：</label>
+								<div class="col-sm-10">
+									<#form:fileupload id="uploadFile" bizKey="${zbDeviceRepair.id}" bizType="zbDeviceRepair_handover_file" returnPath="true" filePathInputId="filePath"
+									uploadType="all" class="" readonly="false"/>
+									<span><font color="red">备注：下载并打印设备交接单，完成设备交接后，把签字后的设备交接单上传到系统</font></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<span id="pdf_preview" class="btn btn-sm btn-primary">预览</span>
+				</div>
+				<#form:hidden name="filePath" path="filePath"/>
+				<div id="diagnoseShow" style="display: none">
+					<div class="form-unit">${text('设备维修中心')}</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required ">*</span> ${text('维修人')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:treeselect id="receiveCode" title="${text('选择维修人')}"
+									path="repairCode" labelPath="repairName"
+									url="${ctx}/sys/office/treeData?isLoadUser=true"
+									allowClear="true"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required ">*</span> ${text('诊断结果')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:select path="repairResultType" dictType="zb_device_repair_result_type" class="form-control" blankOption="true" blankOptionLabel="请选择"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label class="control-label col-sm-2" title="">
+									<span class="required hide">*</span> ${text('诊断描述')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-10">
+									<#form:textarea path="diagnoseText" rows="4" maxlength="255" class="form-control" placeholder="填写设备的故障描述。。。"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label class="control-label col-sm-2" title="">
+									<span class="required hide">*</span> ${text('备注信息')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-10">
+									<#form:textarea path="remarks" rows="4" maxlength="255" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="outerShow" style="display: none">
+					<div class="form-unit">${text('外送维修情况')}</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label class="control-label col-sm-4" title="">
+									<span class="required">*</span> ${text('外送维修单位名称')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-8">
+									<#form:input path="repairUnitName" maxlength="64" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label class="control-label col-sm-2" title="">
+									<span class="required">*</span> ${text('维修情况说明')}：<i class="fa icon-question hide"></i></label>
+								<div class="col-sm-10">
+									<#form:textarea path="outerText" rows="4" maxlength="255" class="form-control"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label class="control-label col-sm-2">${text('维修处理实施报告')}：</label>
+								<div class="col-sm-10">
+									<#form:fileupload id="uploadOuterFile" preview="true"  bizKey="${zbDeviceRepair.id}" bizType="zbDeviceRepair_outer_file" returnPath="true" filePathInputId="outerFilePath"
+									uploadType="all" class="" readonly="false"  />
+									<span><font color="red">备注：下载并打印设备交接单，完成设备交接后，把签字后的设备交接单上传到系统</font></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<#form:hidden name="outerFilePath" path="outerFilePath"/>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('device_repair:zbDeviceRepair:edit')){ %>
+						<%
+							var btnName = "保 存";
+							if (zbDeviceRepair.state == "1") {
+								btnName = "交 接";
+							} else if (zbDeviceRepair.state == "2") {
+								btnName = "诊 断";
+							} else {
+								btnName = "完 成";
+							}
+						%>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i>${btnName}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script>
+	var zbDeviceRepair = ${toJson(zbDeviceRepair)} || {};
+
+	// 预览按钮监听事件
+	$(".fa fa-eye").click(function () {
+
+	});
+
+	$("#pdf_preview").click(function () {
+		// 获取文件地址
+		var url = $("#filePath").val();
+
+		// filePath = "/js/userfiles/fileupload/202007/15942887260075505.pdf";
+
+		// url = "/js/userfiles/fileupload/202007/15942887260075505.pdf";
+		// url += url.indexOf('?') == -1 ? '?' : '&';
+		// url += 'preview=true';
+
+		var contentStr = '<iframe id="pdfContainer" ' +
+				'src="/js/static/js/pdfjs/web/viewer.html?file='+ url +'#page=1" width="100%" height="100%" frameborder="0">' +
+				'</iframe>';
+
+		layer.open({
+			type: 1,
+			area: ['100%', '100%'],
+			title: ["文件预览", 'font-size:15px;font-style: oblique;color: #1890ff;border-bottom: 1px solid #ddd;font-weight: normal'],
+			content: contentStr,
+			btn: "",
+			btnAlign: 'c', //按钮居中
+			shade: 0.1 //不显示遮罩
+		});
+
+	});
+	// if (filePath) {
+	// 	$("#pdfContainer").attr("src", "js/static/pdfjs/web/viewer.html?file="+ filePath +"#page=1")
+	// }
+
+	if (zbDeviceRepair.state != 1 && zbDeviceRepair.state != 0) {
+		$("#diagnoseShow").show();
+	}
+
+	if (zbDeviceRepair.repairType == 2) {
+		$("#outerShow").show();
+		$("#handoverInfoShow").hide();
+		$("#diagnoseShow").hide();
+	}
+
+	//图片或文件预览
+	$(document).on('click', 'a.preview', function(){
+		var $this = $(this), url = $this.attr('previewurl');
+		url = url.split("?")[0];
+
+
+
+	});
+
+	/**
+	 * 下载交接单事件
+	 */
+	$("#downloadHandoverBtn").click(function () {
+		var e = layer.load(2,{content:"正在下载单据，请稍后..."});
+
+		jQuery.ajax({
+			url: "${ctx}/device/device_repair_handover/zbDeviceRepairHandover/downloadBill",
+			type: "POST",
+			dataType: "json",
+			data: { "deviceRepairId": zbDeviceRepair.id },
+			async:true,
+			success:function(result){
+				layer.close(e);
+				if (result.code == '0') {
+					if(index != undefined){
+						window.parent.layer.close(index);
+					}
+				}else{
+					submitFlag = false;
+					layer.msg(result.message);
+				}
+			},
+			error:function(error){
+				layer.close(e);
+				layer.msg("网络错误");
+			}
+		});
+	});
+</script>
+<script>
+	$("#inputForm").validate({
+		submitHandler: function(form){
+			js.ajaxSubmitForm($(form), function(data){
+				js.showMessage(data.message);
+				if(data.result == Global.TRUE){
+					js.closeCurrentTabPage(function(contentWindow){
+						contentWindow.page();
+					});
+				}
+			}, "json");
+		}
+	});
+
+	$(function(){
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			if(typeof window.webuploaderRefresh == 'function'){
+				window.webuploaderRefresh();
+			}
+		});
+	});
+</script>

@@ -1,0 +1,95 @@
+<% layout('/layouts/default.html', {title: '设备维修申请单管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> ${text('设备维修申请单管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('device_repair_apply:zbDeviceRepairApply:edit')){ %>
+					<a href="${ctx}/device/device_repair_apply/zbDeviceRepairApply/form" class="btn btn-default btnTool" title="${text('新增设备维修申请单')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${zbDeviceRepairApply}" action="${ctx}/device/device_repair_apply/zbDeviceRepairApply/listData" method="post" class="form-inline"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('申请单编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="billCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('申请人')}：</label>
+					<div class="control-inline">
+						<#form:input path="applyName" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('审核人')}：</label>
+					<div class="control-inline">
+						<#form:input path="auditName" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline">
+						<#form:select path="state" dictType="zb_device_management_state" blankOption="true" blankOptionLabel="全部" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("申请单编号")}', name:'billCode', index:'a.bill_code', width:250, align:"center", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/device/device_repair_apply/zbDeviceRepairApply/form?id='+row.id+'" class="btnList" data-title="${text("查看设备维修申请单")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("状态")}', name:'state', index:'a.state', width:80, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('zb_device_repair_apply_state')}, val, '${text("未知")}', true);
+		}},
+		// {header:'${text("审核人")}', name:'auditName', index:'a.audit_code', width:150, align:"left"},
+		// {header:'${text("维修类型")}', name:'repairType', index:'a.repair_type', width:150, align:"center", formatter: function(val, obj, row, act){
+		// 	return js.getDictLabel(${@DictUtils.getDictListJson('zb_device_repair_type')}, val, '${text("未知")}', true);
+		// }},
+		{header:'${text("申请人")}', name:'createByName', index:'a.apply_code', width:150, align:"left"},
+		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'${text("更新者")}', name:'updateByName', index:'a.update_by', width:150, align:"left"},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text("操作")}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			if (row.state == 2) {
+				return '';
+			};
+			<% if(hasPermi('device_repair_apply:zbDeviceRepairApply:edit')){ %>
+				if (row.state == 0) {
+					actions.push('<a href="${ctx}/device/device_repair_apply/zbDeviceRepairApply/form?id='+row.id+'" class="btnList" title="${text("编辑设备维修申请单")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+					actions.push('<a href="${ctx}/device/device_repair_apply/zbDeviceRepairApply/delete?id='+row.id+'" class="btnList" title="${text("删除设备维修申请单")}" data-confirm="${text("确认要删除该设备维修申请单吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				};
+
+				if (row.state == 1) {
+					actions.push('<a href="${ctx}/device/device_repair_apply/zbDeviceRepairApply/audit_form?id='+row.id+'&applyName='+row.applyName+'" class="btnList" title="${text("审核维修申请单")}"><i class="fa fa-check-square-o"></i></a>&nbsp;');
+				}
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+
+	}
+});
+</script>

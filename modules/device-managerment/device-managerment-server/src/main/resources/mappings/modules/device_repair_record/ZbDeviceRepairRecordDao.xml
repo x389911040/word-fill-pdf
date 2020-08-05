@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rd.modules.device_repair_record.dao.ZbDeviceRepairRecordDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="ZbDeviceRepairRecord">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+
+	<select id="findPage" resultType="ZbDeviceRepairRecord">
+		SELECT
+			a.id AS id,
+			zdra.bill_code AS billCode,
+			zda.accounts_code AS deviceAccountsCode,
+			a.device_accounts_id AS deviceAccountsId,
+			zd.device_code AS deviceCode,
+			zd.device_name AS deviceName,
+			a.repair_organ_name AS repairOrganName,
+			a.repair_type AS repairType,
+			a.repair_result_type AS repairResultType,
+			jsu.user_name AS createByName,
+			a.create_date AS createDate,
+			jsu1.user_name AS updateByName,
+			jsu2.user_name AS applyName,
+			a.remarks AS remarks,
+			a.update_date AS updateDate,
+			a.repair_opinion AS repairOpinion
+		FROM
+			`zb_device_repair_record` a
+			INNER JOIN zb_device_repair_apply zdra
+				ON zdra.id = a.repair_apply_id
+			INNER JOIN zb_device_accounts zda
+				ON zda.id = a.device_accounts_id
+			INNER JOIN zb_device zd
+				ON zd.id = zda.device_id
+			INNER JOIN js_sys_user jsu 
+				ON jsu.user_code = a.create_by
+			INNER JOIN js_sys_user jsu1
+				ON jsu1.user_code = a.update_by
+			INNER JOIN js_sys_user jsu2
+				ON jsu2.user_code = zdra.apply_code
+		<where>
+			<if test="billCode != null and billCode != ''">
+				zdra.bill_code = #{billCode}
+			</if>
+			<if test="deviceAccountsCode != null and deviceAccountsCode != ''">
+				zda.accounts_code = #{deviceAccountsCode}
+			</if>
+			<if test="repairOrganName != null and repairOrganName != ''">
+				a.repair_organ_name LIKE '%${repairOrganName}%'
+			</if>
+			<if test="deviceAccountsId != null and deviceAccountsId != ''">
+				a.device_accounts_id = #{deviceAccountsId}
+			</if>
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select>
+</mapper>

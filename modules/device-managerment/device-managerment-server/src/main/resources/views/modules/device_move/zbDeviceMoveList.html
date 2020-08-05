@@ -1,0 +1,107 @@
+<% layout('/layouts/default.html', {title: '设备移交管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> ${text('设备移交管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('device_move:zbDeviceMove:edit')){ %>
+					<a href="${ctx}/device/device_move/zbDeviceMove/form" class="btn btn-default btnTool" title="${text('新增设备移交')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${zbDeviceMove}" action="${ctx}/device/device_move/zbDeviceMove/listData" method="post" class="form-inline"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('单据编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="billCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+<!--				<div class="form-group">-->
+<!--					<label class="control-label">${text('移交人编码')}：</label>-->
+<!--					<div class="control-inline">-->
+<!--						<#form:input path="moveCode" maxlength="64" class="form-control width-120"/>-->
+<!--					</div>-->
+<!--				</div>-->
+				<div class="form-group">
+					<label class="control-label">${text('移交人名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="moveName" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('接收部门名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="receiveDeptName" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('接收人名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="receiveName" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline" style="width: 120px;">
+						<#form:select path="state" dictType="zb_device_management_state" blankOption="true" blankOptionLabel="全部" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("单据编号")}', name:'billCode', index:'a.bill_code', width:250, align:"center", frozen:true, formatter: function(val, obj, row, act){
+				return '<a href="${ctx}/device/device_move/zbDeviceMove/form?id='+row.id+'&moveName='+row.moveName+'&receiveDeptName='+row.receiveDeptName+'&receiveName='+row.receiveName+'" ' +
+						'class="btnList" data-title="${text("查看设备移交")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("移交部门")}', name:'moveDeptName', index:'a.move_dept_code', width:150, align:"left", hidden: true},
+		{header:'${text("移交人")}', name:'moveName', index:'a.move_code', width:150, align:"left"},
+		// {header:'${text("移交人")}', name:'moveCode.userName', index:'ui.user_name', width:150, align:"left"},
+		{header:'${text("接收部门")}', name:'receiveDeptName', index:'a.receive_dept_name', width:150, align:"left"},
+		// {header:'${text("接收人编码")}', name:'receiveCode', index:'a.receive_code', width:150, align:"left"},
+		{header:'${text("接收人")}', name:'receiveName', index:'a.receive_name', width:150, align:"left"},
+		// {header:'${text("审核人编码")}', name:'auditCode', index:'a.audit_code', width:150, align:"left"},
+		{header:'${text("审核人")}', name:'auditName', index:'a.audit_name', width:150, align:"left"},
+		{header:'${text("创建人")}', name:'createBy', index:'a.create_by', width:150, align:"left"},
+		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', width:220, align:"center"},
+		{header:'${text("修改人")}', name:'updateBy', index:'a.update_by', width:150, align:"left"},
+		{header:'${text("修改时间")}', name:'updateDate', index:'a.update_date', width:220, align:"center"},
+		{header:'${text("状态")}', name:'state', index:'a.state', width:80, align:"center", formatter: function(val, obj, row, act){
+				return js.getDictLabel(${@DictUtils.getDictListJson('zb_device_move_state')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("操作")}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			if (row.state != 1) {
+				return '';
+			}
+			<% if(hasPermi('device_move:zbDeviceMove:edit')){ %>
+				actions.push('<a href="${ctx}/device/device_move/zbDeviceMove/form?id='+row.id+'" class="btnList" title="${text("编辑移交单")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/device/device_move/zbDeviceMove/audit_form?id='+row.id+'" class="btnList" title="${text("审核移交单")}"><i class="fa fa-check-square-o"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/device/device_move/zbDeviceMove/delete?id='+row.id+'" class="btnList" title="${text("删除移交单")}" data-confirm="${text("确认要删除该移交单吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+
+	}
+});
+</script>

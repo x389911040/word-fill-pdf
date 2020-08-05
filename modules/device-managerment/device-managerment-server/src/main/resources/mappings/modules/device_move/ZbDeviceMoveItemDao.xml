@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rd.modules.device_move.dao.ZbDeviceMoveItemDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="ZbDeviceMoveItem">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+
+	<select id="findListById" resultType="ZbDeviceMoveItem" parameterType="ZbDeviceMove">
+		SELECT
+			zdmi.id AS id,
+			zdmi.device_accounts_id AS deviceAccountsId,
+			zda.accounts_code AS accountsCode,
+			zda.device_name AS deviceName,
+			zda.unit_type AS unitType,
+			zda.spec AS spec,
+			zda.manufacturer AS manufacturer,
+			zda.location AS location
+		FROM
+			`zb_device_move_item` zdmi
+			INNER JOIN zb_device_accounts zda
+				ON zda.id = zdmi.device_accounts_id
+		<where>
+			<if test="id != null and id != ''">
+				zdmi.device_move_id = #{id}
+			</if>
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.jeesite</groupId>
+	<artifactId>jeesite-cloud-root</artifactId>
+	<version>4.1.9-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+	<name>JeeSite Cloud</name>
+	<url>http://jeesite.com</url>
+	<inceptionYear>2013-Now</inceptionYear>
+	
+	<modules>
+		<!--<module>../../jeesite/root</module>-->
+        <module>../parent</module>
+        <module>../gateway</module>
+        <module>../modules/core/core</module>
+		<module>../zipkin</module>
+		<module>../modules/device-managerment/device-managerment-server</module>
+		<module>../modules/device-managerment/device-managerment-client</module>
+	    <module>../admin</module>
+    </modules>
+	
+	<developers>  
+		<developer>
+			<id>thinkgem</id>
+			<name>WangZhen</name>
+			<email>thinkgem at 163.com</email>
+			<roles><role>Project lead</role></roles>
+			<timezone>+8</timezone>  
+		</developer>
+	</developers>
+	
+	<organization>
+		<name>JeeSite</name>
+		<url>http://jeesite.com</url>
+	</organization>
+	
+</project>

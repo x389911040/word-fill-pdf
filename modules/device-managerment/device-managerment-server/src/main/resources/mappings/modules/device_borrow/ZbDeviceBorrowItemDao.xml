@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rd.modules.device_borrow.dao.ZbDeviceBorrowItemDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="ZbDeviceBorrowItem">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+
+	<select id="findListById" resultType="ZbDeviceBorrowItem" parameterType="ZbDeviceBorrow">
+		SELECT
+			zdbi.id AS id,
+			zdbi.device_accounts_id AS deviceAccountsId,
+			zda.accounts_code AS accountsCode,
+			zda.device_name AS deviceName,
+			zda.unit_type AS unitType,
+			zda.spec AS spec,
+			zda.manufacturer AS manufacturer,
+			zdbi.return_date AS returnDate,
+			zdbi.state AS state,
+			zdbi.remarks AS remarks
+		FROM
+			`zb_device_borrow_item` zdbi
+			INNER JOIN zb_device_accounts zda
+				ON zda.id = zdbi.device_accounts_id
+		<where>
+			<if test="id != null and id != ''">
+				zdbi.device_borrow_id = #{id}
+			</if>
+		</where>
+	</select>
+</mapper>

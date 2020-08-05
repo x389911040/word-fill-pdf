@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="device-managerment-client" />
+        <module name="jeesite-cloud-zipkin" />
+        <module name="zb-modules-core" />
+        <module name="device-managerment-server" />
+        <module name="jeesite-cloud-gateway" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="device-managerment-client" target="1.8" />
+      <module name="device-managerment-server" target="1.8" />
+      <module name="jeesite-cloud-gateway" target="1.8" />
+      <module name="jeesite-cloud-parent" target="1.8" />
+      <module name="jeesite-cloud-root" target="1.5" />
+      <module name="jeesite-cloud-zipkin" target="1.8" />
+      <module name="zb-modules-core" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="device-managerment-client" options="-parameters" />
+      <module name="device-managerment-server" options="-parameters" />
+      <module name="jeesite-cloud-gateway" options="-parameters" />
+      <module name="jeesite-cloud-zipkin" options="-parameters" />
+      <module name="zb-modules-core" options="-parameters" />
+    </option>
+  </component>
+</project>

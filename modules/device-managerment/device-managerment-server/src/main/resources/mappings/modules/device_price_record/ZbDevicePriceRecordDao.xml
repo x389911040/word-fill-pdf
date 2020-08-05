@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rd.modules.device_price_record.dao.ZbDevicePriceRecordDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="ZbDevicePriceRecord">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+
+	<select id="getLastPriceRecord" resultType="ZbDevicePriceRecord" parameterType="ZbDevicePriceRecord">
+		SELECT
+			zdpr.id AS id,
+			zdpr.device_id AS deviceId,
+			zdpr.supplier_id AS supplierId,
+			zdpr.batch_number AS batchNumber,
+			zdpr.price AS price,
+			zdpr.num AS num
+		FROM
+			`zb_device_price_record` zdpr
+		<where>
+			<if test="deviceId != null and deviceId != ''">
+				zdpr.device_id = #{deviceId}
+			</if>
+		</where>
+		ORDER BY zdpr.create_date DESC
+			LIMIT 1
+	</select>
+
+	<select id="getLastPriceRecord" resultType="ZbDevicePriceRecord" parameterType="ZbDevicePriceRecord">
+		SELECT
+		zdpr.id AS id,
+		zdpr.device_id AS deviceId,
+		zdpr.supplier_id AS supplierId,
+		zdpr.batch_number AS batchNumber,
+		zdpr.price AS price,
+		zdpr.num AS num
+		FROM
+		`zb_device_price_record` zdpr
+		<where>
+			<if test="deviceId != null and deviceId != ''">
+				zdpr.device_id = #{deviceId}
+			</if>
+		</where>
+		ORDER BY zdpr.create_date DESC
+		LIMIT 1
+	</select>
+</mapper>

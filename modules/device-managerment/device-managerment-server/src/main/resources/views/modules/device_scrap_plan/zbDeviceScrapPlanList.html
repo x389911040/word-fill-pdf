@@ -1,0 +1,78 @@
+<% layout('/layouts/default.html', {title: '设备报废计划管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa icon-notebook"></i> ${text('设备报废计划管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('device_scrap_plan:zbDeviceScrapPlan:edit')){ %>
+					<a href="${ctx}/device/device_scrap_plan/zbDeviceScrapPlan/form" class="btn btn-default btnTool" title="${text('新增设备报废计划')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${zbDeviceScrapPlan}" action="${ctx}/device/device_scrap_plan/zbDeviceScrapPlan/listData" method="post" class="form-inline"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('申请单编号')}：</label>
+					<div class="control-inline">
+						<#form:input path="billCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('申请部门')}：</label>
+					<div class="control-inline">
+						<#form:input path="deptCode" maxlength="64" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline">
+						<#form:input path="state" maxlength="1" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("申请单编号")}', name:'billCode', index:'a.bill_code', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/device/device_scrap_plan/zbDeviceScrapPlan/form?id='+row.id+'" class="btnList" data-title="${text("编辑设备报废计划")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("申请部门")}', name:'deptName', index:'a.dept_code', width:150, align:"left"},
+		{header:'${text("状态")}', name:'state', index:'a.state', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('zb_device_management_state')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("创建者")}', name:'createByName', index:'a.create_by', width:150, align:"left"},
+		{header:'${text("创建时间")}', name:'createDate', index:'a.create_date', width:150, align:"center"},
+		{header:'${text("更新时间")}', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+		{header:'${text("操作")}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+
+			<% if(hasPermi('device_scrap_plan:zbDeviceScrapPlan:edit')){ %>
+				actions.push('<a href="${ctx}/device/device_scrap_plan/zbDeviceScrapPlan/form?id='+row.id+'" class="btnList" title="${text("编辑设备报废计划")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/device/device_scrap_plan/zbDeviceScrapPlan/audit_form?id='+row.id+'" class="btnList" title="${text("审核报废计划")}"><i class="fa fa-check-square-o"></i></a>&nbsp;');
+				actions.push('<a href="${ctx}/device/device_scrap_plan/zbDeviceScrapPlan/delete?id='+row.id+'" class="btnList" title="${text("删除设备报废计划")}" data-confirm="${text("确认要删除该设备报废计划吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>

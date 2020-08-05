@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rd.modules.device_scrap_move.dao.ZbDeviceScrapMoveDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="ZbDeviceScrapMove">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+
+	<!-- 查询报废处置移交单列表数据 -->
+	<select id="findPage" resultType="ZbDeviceScrapMove">
+		SELECT
+			a.id AS id,
+			a.bill_code AS billCode,
+			a.state AS state,
+			zda.accounts_code AS accountsCode,
+			zda.device_name AS deviceName,
+			zda.brand AS brand,
+			zda.unit_type AS unitType,
+			zda.spec AS spec,
+			jsu.user_name AS createByName,
+			jsu1.user_name AS updateByName,
+			a.create_date AS createDate,
+			a.update_date AS updateDate
+		FROM
+			`zb_device_scrap_move` a
+			INNER JOIN zb_device_accounts zda
+				ON zda.id = a.device_accounts_id
+			INNER JOIN js_sys_user jsu
+				ON jsu.user_code = a.create_by
+			INNER JOIN js_sys_user jsu1
+				ON jsu1.user_code = a.update_by
+		<where>
+			<if test="billCode != null and billCode != ''">
+				a.bill_code = #{billCode}
+			</if>
+			<if test="accountsCode != null and accountsCode != ''">
+				zda.accounts_code = #{accountsCode}
+			</if>
+			<if test="deviceName != null and deviceName != ''">
+				zda.device_name LIKE '%${deviceName}%'
+			</if>
+		</where>
+	</select>
+</mapper>

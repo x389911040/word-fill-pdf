@@ -1,0 +1,1033 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5dfd67d9-547c-48c4-9b8f-a20236bd60e7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/context" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/context/DocContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/entity" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/entity/DocParams.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategyImpls" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategyImpls/Doc2PdfStrategyImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategyImpls/Excel2PdfStrategyImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategyImpls/Pdf2imgStrategyImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategys" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategys/DocChange.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils/ConvertThrad.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils/FileChangeUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils/FileUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils/OssUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils/PagesUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils/PdfToImgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils/UploadThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/pdf_convert" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/static/download" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/static/download/doc-template" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/static/download/doc-template/设备启封单无表格模板.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/core/core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/core/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/device_info/service/ZbDeviceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/device_info/service/ZbDeviceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/device_seal/web/ZbDeviceSealOpenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/device_seal/web/ZbDeviceSealOpenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/config/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/config/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_accounts/zbDeviceAccountsList.html" beforeDir="false" afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_accounts/zbDeviceAccountsList.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_repair/zbDeviceRepairForm.html" beforeDir="false" afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_repair/zbDeviceRepairForm.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_seal_open/zbDeviceSealForm.html" beforeDir="false" afterPath="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_seal_open/zbDeviceSealForm.html" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/root/target/" />
+    <ignored path="$PROJECT_DIR$/parent/target/" />
+    <ignored path="$PROJECT_DIR$/modules/device-managerment/device-managerment-client/target/" />
+    <ignored path="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/webapp/WEB-INF/classes/" />
+    <ignored path="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/target/" />
+    <ignored path="$PROJECT_DIR$/zipkin/target/" />
+    <ignored path="$PROJECT_DIR$/gateway/src/main/webapp/WEB-INF/classes/" />
+    <ignored path="$PROJECT_DIR$/gateway/target/" />
+    <ignored path="$PROJECT_DIR$/modules/core/core/src/main/webapp/WEB-INF/classes/" />
+    <ignored path="$PROJECT_DIR$/modules/core/core/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/modules/core/core/src/main/resources/static/js/pdfjs/web/viewer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="175">
+              <caret line="4757" column="35" lean-forward="true" selection-start-line="4757" selection-start-column="35" selection-end-line="4757" selection-end-column="35" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/device_seal/web/ZbDeviceSealOpenController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-4342">
+              <caret line="49" column="24" lean-forward="true" selection-start-line="49" selection-start-column="24" selection-end-line="49" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategyImpls/Doc2PdfStrategyImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="28" column="30" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils/FileChangeUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="341">
+              <caret line="54" selection-start-line="54" selection-end-line="54" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>jeesite-module-weboffice</find>
+      <find>preview=</find>
+      <find>WdatePicker</find>
+      <find>laydate</find>
+      <find>width-datetime</find>
+      <find>class=&quot;form-control laydate width-datetime&quot;</find>
+      <find>spring boot</find>
+      <find>ueditor.json</find>
+      <find>ueditor</find>
+      <find>beetl</find>
+      <find>form</find>
+      <find>webuploader</find>
+      <find>fileuploadCallback</find>
+      <find>uploadFileUploader</find>
+      <find>fileupload</find>
+      <find>打印</find>
+      <find>load.g</find>
+      <find>testCode</find>
+      <find>printCode</find>
+      <find>printContent</find>
+      <find>预览</find>
+      <find>pdf_preview</find>
+      <find>pdfContainer</find>
+      <find>saveFileUpload</find>
+      <find>filePath</find>
+      <find>uploadFile</find>
+      <find>wordexport</find>
+      <find>rangeCheck</find>
+      <find>119</find>
+      <find>内</find>
+    </findStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/utils/MyBeanFactory.java" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_borrow/zbDeviceAllBorrowList.html" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_free/zbDeviceAllFreeList.html" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_scrap_plan/zbDeviceAccountsScrapList.html" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_accounts/zbDeviceAccountsList.html" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/utils/MoveRecordBillCode.java" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_repair/zbDeviceRepairForm.html" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/pdf_convert/FileUploadServiceExtendImpl.java" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/device_info/service/ZbDeviceService.java" />
+        <option value="$PROJECT_DIR$/modules/core/core/src/main/java/com/jeesite/modules/test/web/TestClass.java" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategyImpls/Pdf2imgStrategyImpl.java" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/entity/DocParams.java" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategyImpls/Doc2PdfStrategyImpl.java" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategys/DocChange.java" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/context/DocContext.java" />
+        <option value="$PROJECT_DIR$/modules/core/core/pom.xml" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategyImpls/Excel2PdfStrategyImpl.java" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/config/bootstrap.yml" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_seal_open/zbDeviceSealForm.html" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils/FileUtil.java" />
+        <option value="$PROJECT_DIR$/modules/core/core/src/main/webapp/WEB-INF/classes/static/js/pdfjs/web/viewer.css" />
+        <option value="$PROJECT_DIR$/modules/core/core/src/main/resources/static/js/pdfjs/web/viewer.css" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/pom.xml" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/device_seal/web/ZbDeviceSealOpenController.java" />
+        <option value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils/FileChangeUtils.java" />
+        <option value="$PROJECT_DIR$/modules/core/core/src/main/resources/static/js/pdfjs/web/viewer.js" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="D:/my_life/apache-maven-3.3.9" />
+        <option name="userSettingsFile" value="D:\my_life\apache-maven-3.3.9\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+        <option name="jdkForImporter" value="1.8" />
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="device-managerment-server" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="device-managerment-server" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="device-managerment-server" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+          <item name="clean" type="36feed69:MavenProjectsStructure$PluginNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="10" />
+    <option name="y" value="20" />
+    <option name="width" value="1350" />
+    <option name="height" value="690" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="zb-project-nocas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zb-project-nocas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zb-project-nocas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zb-project-nocas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zb-project-nocas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zb-project-nocas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zb-project-nocas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="pdfjs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zb-project-nocas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="pdfjs" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="zb-project-nocas" type="b2602c69:ProjectViewProjectNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/static/download" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\my_work\workplace\zb-project-nocas\modules\core\core\src\main\resources\static\download" />
+      <recent name="D:\my_work\workplace\zb-project-nocas\modules\device-managerment\device-managerment-server\src\main\resources\download" />
+      <recent name="D:\my_work\workplace\zb-project-nocas\modules\device-managerment\device-managerment-server\src\main\resources" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\my_work\workplace\zb-project-nocas\modules\device-managerment\device-managerment-server\src\main\resources\static\download" />
+      <recent name="D:\my_work\workplace\zb-project-nocas\modules\core\core\src\main\resources\static\download\docx-template" />
+      <recent name="D:\my_work\workplace\zb-project-nocas\modules\device-managerment\device-managerment-server\src\main\resources\config" />
+      <recent name="D:\my_work\workplace\zb-project-nocas\modules\device-managerment\device-managerment-server\src\main\java\com\rd\modules\common" />
+      <recent name="D:\my_work\workplace\zb-project-nocas\modules\core\core\src\main\resources\static\images" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.GatewayApplication">
+    <configuration name="MoveRecordBillCode" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.rd.modules.common.utils.MoveRecordBillCode" />
+      <module name="device-managerment-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.rd.modules.common.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CoreApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="zb-modules-core" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.jeesite.modules.CoreApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DeviceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="device-managerment-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.rd.modules.DeviceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="jeesite-cloud-gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.jeesite.modules.GatewayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ZipkinApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="jeesite-cloud-zipkin" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.jeesite.modules.ZipkinApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.MoveRecordBillCode" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\xjh95\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="D:\my_work\workplace\zb-project-nocas" />
+          <option name="myCopyRoot" value="D:\my_work\workplace\zb-project-nocas" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="D:\my_work\workplace\zb-project-nocas" />
+          <option name="myCopyRoot" value="D:\my_work\workplace\zb-project-nocas" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5dfd67d9-547c-48c4-9b8f-a20236bd60e7" name="Default Changelist" comment="" />
+      <created>1592364264297</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1592364264297</updated>
+      <workItem from="1592364265478" duration="48000" />
+      <workItem from="1592364350401" duration="6182000" />
+      <workItem from="1592442831068" duration="1612000" />
+      <workItem from="1592444475105" duration="14922000" />
+      <workItem from="1592529741027" duration="11847000" />
+      <workItem from="1592789576459" duration="10276000" />
+      <workItem from="1592875856562" duration="8357000" />
+      <workItem from="1592962020030" duration="4853000" />
+      <workItem from="1593308737678" duration="3528000" />
+      <workItem from="1593395633421" duration="886000" />
+      <workItem from="1593479380365" duration="417000" />
+      <workItem from="1593479824967" duration="3108000" />
+      <workItem from="1593589301315" duration="1601000" />
+      <workItem from="1594087953922" duration="172000" />
+      <workItem from="1594089174459" duration="558000" />
+      <workItem from="1594091152262" duration="1260000" />
+      <workItem from="1594100700351" duration="2036000" />
+      <workItem from="1594258343846" duration="14009000" />
+      <workItem from="1594607307038" duration="2577000" />
+      <workItem from="1594622961151" duration="805000" />
+      <workItem from="1594625272450" duration="6241000" />
+      <workItem from="1596424566188" duration="4209000" />
+      <workItem from="1596506907750" duration="21179000" />
+      <workItem from="1596589498099" duration="7484000" />
+      <workItem from="1596608125173" duration="4157000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="132324000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28284183" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info id="Web" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32956153" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.36209336" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49932975" visible="true" weight="0.46676096" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32956153" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.34653464" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50067025" side_tool="true" weight="0.301273" />
+      <window_info anchor="bottom" id="Spring" order="12" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.32956153" />
+      <window_info anchor="bottom" id="Java Enterprise" order="14" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" weight="0.3378016" />
+      <window_info anchor="right" id="Database" order="4" weight="0.3297587" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+      <window_info anchor="right" id="Bean Validation" order="6" />
+      <window_info anchor="right" id="Word Book" order="7" side_tool="true" />
+      <window_info anchor="right" id="Translation Assistant" order="8" weight="0.3297587" />
+      <window_info anchor="right" id="Coverage" order="9" side_tool="true" weight="0.3297587" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/pdf_convert/FileUploadServiceExtendImpl.java</url>
+          <line>55</line>
+          <properties />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <dependency id="0" />
+          <url>file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/pdf_convert/FileUploadServiceExtendImpl.java</url>
+          <line>94</line>
+          <properties />
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <dependency master-id="0" />
+          <url>jar://$MAVEN_REPOSITORY$/com/jeesite/jeesite-common/4.1.9-SNAPSHOT/jeesite-common-4.1.9-20200617.070003-3.jar!/com/jeesite/common/utils/word/WordExport.class</url>
+          <line>71</line>
+          <properties />
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/com/jeesite/jeesite-common/4.1.9-SNAPSHOT/jeesite-common-4.1.9-20200617.070003-3.jar!/com/jeesite/common/utils/word/WordExport.class</url>
+          <line>121</line>
+          <properties />
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/com/jeesite/jeesite-common/4.1.9-SNAPSHOT/jeesite-common-4.1.9-20200617.070003-3.jar!/com/jeesite/common/utils/word/WordExport.class</url>
+          <line>104</line>
+          <properties />
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="i" language="JAVA" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/zb_project_nocas$GatewayApplication.ic" NAME="GatewayApplication Coverage Results" MODIFIED="1594294340410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="forceReturnValue">
+      <expression>
+        <expression-string>null</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="watch">
+      <expression>
+        <expression-string>ZbDeviceSealOpenController.class.getClassLoader().getResource(&quot;static/download/doc-template/设备启封单无表格模板.docx&quot;).</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>ZbDeviceSealOpenController.class.getClassLoader().getResource(&quot;static/download/doc-template/设备启封单无表格模板.docx&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>ZbDeviceSealOpenController.class.getClassLoader().getResource(&quot;config&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>ZbDeviceSealOpenController.class.getClassLoader().getResource(&quot;/&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>ZbDeviceSealOpenController.class.getClassLoader().getResource(&quot;&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>table.getRows()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>i</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="jar://$MAVEN_REPOSITORY$/com/jeesite/jeesite-common/4.1.9-SNAPSHOT/jeesite-common-4.1.9-20200617.070003-3.jar!/com/jeesite/common/utils/IdcardUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6750">
+          <caret line="33" column="28" lean-forward="true" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/jeesite/jeesite-common/4.1.9-SNAPSHOT/jeesite-common-4.1.9-20200617.070003-3.jar!/com/jeesite/common/utils/word/BookMarks.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="24" column="40" lean-forward="true" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/jeesite/jeesite-common/4.1.9-SNAPSHOT/jeesite-common-4.1.9-20200617.070003-3.jar!/com/jeesite/common/utils/word/BookMark.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2350">
+          <caret line="26" column="54" lean-forward="true" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/jeesite/jeesite-common/4.1.9-SNAPSHOT/jeesite-common-4.1.9-20200617.070003-3.jar!/com/jeesite/common/utils/excel/fieldtype/MoneyType.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="15" column="45" lean-forward="true" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
+          <folding>
+            <element signature="e#369#370#0" expanded="true" />
+            <element signature="e#444#445#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_move/zbDeviceMoveForm.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="858">
+          <caret line="398" column="33" lean-forward="true" selection-start-line="398" selection-start-column="33" selection-end-line="398" selection-end-column="33" />
+          <folding>
+            <element signature="e#236#242#1" expanded="true" />
+            <element signature="e#185#191#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_152/src.zip!/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="654" column="27" selection-start-line="654" selection-start-column="17" selection-end-line="654" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/core/src/main/java/com/jeesite/modules/test/web/TestClass.java" />
+    <entry file="jar://$MAVEN_REPOSITORY$/com/jeesite/jeesite-common/4.1.9-SNAPSHOT/jeesite-common-4.1.9-20200617.070003-3.jar!/com/jeesite/common/utils/word/WordExport.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="62" column="54" lean-forward="true" selection-start-line="62" selection-start-column="54" selection-end-line="62" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils/PdfToImgs.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils/ConvertThrad.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/DocConvert.java" />
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/entity/DocParams.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/IndexController.java" />
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategys/DocChange.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="53" selection-start-line="3" selection-start-column="53" selection-end-line="3" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/license.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategyImpls/Pdf2imgStrategyImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-493" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategyImpls/Excel2PdfStrategyImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="20" column="44" lean-forward="true" selection-start-line="20" selection-start-column="44" selection-end-line="20" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_repair/zbDeviceRepairForm.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="582">
+          <caret line="268" column="11" selection-start-line="247" selection-start-column="8" selection-end-line="268" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/webapp/WEB-INF/classes/com/rd/modules/common/convert/utils/FileChangeUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-150">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+          <folding>
+            <element signature="e#0#2428#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/context/DocContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="13" column="18" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/device_seal/web/ZbDeviceSealController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/config/bootstrap.yml" />
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/device_free/web/ZbDeviceFreeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-736">
+          <caret line="158" lean-forward="true" selection-start-line="158" selection-end-line="158" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_152/src.zip!/java/lang/String.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-981">
+          <caret line="2328" column="20" selection-start-line="2328" selection-start-column="20" selection-end-line="2328" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/resources/views/modules/device_seal_open/zbDeviceSealForm.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4125">
+          <caret line="165" column="36" selection-start-line="165" selection-start-column="36" selection-end-line="165" selection-end-column="36" />
+          <folding>
+            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/core/src/main/resources/static/js/pdfjs/LICENSE">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3594">
+          <caret line="12" column="71" lean-forward="true" selection-start-line="12" selection-start-column="71" selection-end-line="12" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/core/src/main/resources/static/js/pdfjs/build/pdf.worker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/core/src/main/resources/static/js/pdfjs/web/locale/ar/viewer.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1450">
+          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/core/src/main/resources/static/js/pdfjs/web/locale/locale.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="4" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/core/src/main/resources/static/js/pdfjs/web/viewer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-10143" />
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/lowagie/itext/2.1.7/itext-2.1.7.jar!/com/lowagie/text/pdf/PdfStamperImp.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1548">
+          <caret line="53" column="4" selection-start-line="53" selection-start-column="4" selection-end-line="53" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/lowagie/itext/2.1.7/itext-2.1.7.jar!/com/lowagie/text/pdf/PdfStamper.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="33" column="35" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/core/src/main/webapp/WEB-INF/classes/static/js/pdfjs/web/viewer.js" />
+    <entry file="file://$PROJECT_DIR$/modules/core/core/src/main/resources/static/js/pdfjs/web/viewer.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="463">
+          <caret line="27" column="1" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/core/src/main/webapp/WEB-INF/classes/static/js/pdfjs/web/viewer.css" />
+    <entry file="jar://$MAVEN_REPOSITORY$/com/lowagie/itext/2.1.7/itext-2.1.7.jar!/com/lowagie/text/pdf/PdfContentByte.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22700">
+          <caret line="994" column="16" selection-start-line="994" selection-start-column="16" selection-end-line="994" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/lowagie/itext/2.1.7/itext-2.1.7.jar!/com/lowagie/text/pdf/BaseFont.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/DeviceApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/core/src/main/resources/config/bootstrap.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/device-managerment-server.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils/FileUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="444">
+          <caret line="193" column="45" selection-start-line="193" selection-start-column="45" selection-end-line="193" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/core/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1950">
+          <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/5.0.12.RELEASE/spring-core-5.0.12.RELEASE.jar!/org/springframework/cglib/proxy/MethodProxy.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="111" column="13" lean-forward="true" selection-start-line="111" selection-start-column="13" selection-end-line="111" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/jeesite/jeesite-common/4.1.9-SNAPSHOT/jeesite-common-4.1.9-20200727.113523-5.jar!/com/jeesite/common/utils/word/WordExport.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="204" column="43" selection-start-line="204" selection-start-column="43" selection-end-line="204" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/intercept/GlobalExceptionIntercept.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/exception/BusinessException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-50">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/device_seal/web/ZbDeviceSealOpenController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4342">
+          <caret line="49" column="24" lean-forward="true" selection-start-line="49" selection-start-column="24" selection-end-line="49" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/strategyImpls/Doc2PdfStrategyImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="28" column="30" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/device-managerment/device-managerment-server/src/main/java/com/rd/modules/common/convert/utils/FileChangeUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/core/src/main/resources/static/js/pdfjs/web/viewer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="4757" column="35" lean-forward="true" selection-start-line="4757" selection-start-column="35" selection-end-line="4757" selection-end-column="35" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>device-managerment-server:war</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Web</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>device-managerment-client</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.28613138" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: commons-fileupload:commons-fileupload:1.3.3</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

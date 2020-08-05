@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.jeesite:jeesite-cloud-module-test2-client:4.1.9-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/jeesite/jeesite-cloud-module-test2-client/4.1.9-SNAPSHOT/jeesite-cloud-module-test2-client-4.1.9-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/jeesite/jeesite-cloud-module-test2-client/4.1.9-SNAPSHOT/jeesite-cloud-module-test2-client-4.1.9-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/jeesite/jeesite-cloud-module-test2-client/4.1.9-SNAPSHOT/jeesite-cloud-module-test2-client-4.1.9-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

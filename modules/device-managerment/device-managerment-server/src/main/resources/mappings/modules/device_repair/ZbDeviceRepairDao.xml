@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rd.modules.device_repair.dao.ZbDeviceRepairDao">
+	
+	<!-- 查询数据
+	<select id="findList" resultType="ZbDeviceRepair">
+		SELECT ${sqlMap.column.toSql()}
+		FROM ${sqlMap.table.toSql()}
+		<where>
+			${sqlMap.where.toSql()}
+		</where>
+		ORDER BY ${sqlMap.order.toSql()}
+	</select> -->
+
+	<select id="findPage" resultType="ZbDeviceRepair">
+		SELECT
+			a.id AS Id,
+			a.device_accounts_id AS deviceAccountsId,
+			a.bill_code AS billCode,
+			zdra.bill_code AS repairApplyCode,
+			zda.accounts_code AS deviceAccountsCode,
+			zda.device_name AS deviceName,
+			a.repair_type AS repairType,
+			a.repair_result_type AS repairResultType,
+			a.repair_unit_name AS repairUnitName,
+			a.error_text AS errorText,
+			a.`state` AS state,
+			jsu3.user_name AS repairName,
+			a.create_by AS createBy,
+			jsu1.user_name AS createByName,
+			a.create_date AS createDate,
+			jsu2.user_name AS updateByName,
+			a.update_date AS updateDate
+		FROM
+			`zb_device_repair` a
+			INNER JOIN zb_device_repair_apply_item zdrai
+				ON zdrai.id = a.repair_apply_item_id
+			INNER JOIN zb_device_repair_apply zdra
+				ON zdra.id = zdrai.repair_apply_id
+			INNER JOIN zb_device_accounts zda
+				ON zda.id = a.device_accounts_id
+			INNER JOIN js_sys_user jsu1
+				ON jsu1.user_code = a.create_by
+			INNER JOIN js_sys_user jsu2
+				ON jsu2.user_code = a.update_by
+			LEFT JOIN js_sys_user jsu3
+				ON jsu3.user_code = a.repair_code
+		<where>
+			<if test="deviceAccountsId != null and deviceAccountsId != ''">
+				AND a.device_accounts_id = #{deviceAccountsId}
+			</if>
+			<if test="billCode != null and billCode != ''">
+				AND a.bill_code = #{billCode}
+			</if>
+			<if test="state != null and state != ''">
+				AND a.state = #{state}
+			</if>
+			<if test="searchInner != null and searchInner !=''">
+				<choose>
+					<when test="searchInner == 1">
+						a.repair_type = 1
+					</when>
+					<otherwise>
+						a.repair_type = 2
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+		ORDER BY
+		${sqlMap.order.toSql()}
+	</select>
+
+	<select id="getRepairBillDetailById" resultType="ZbDeviceRepair">
+		SELECT
+			zdr.id AS id,
+			zdr.device_accounts_id AS deviceAccountsId,
+			zdr.bill_code AS billCode,
+			zdr.repair_type AS repairType,
+			zdr.repair_result_type AS repairResultType,
+			zdr.repair_code AS repairCode,
+			zdr.repair_unit_name AS repairUnitName,
+			zdra.bill_code AS repairApplyCode,
+			zda.accounts_code AS deviceAccountsCode,
+			zda.device_name AS deviceName,
+			zda.unit_type AS unitType,
+			zda.spec AS spec,
+			zdr.create_by AS createBy,
+			zdr.state AS state,
+			zdr.remarks AS remarks,
+			zdr.error_text AS errorText,
+			zdr.diagnose_text AS diagnoseText,
+			zdr.outer_text AS outerText
+		FROM
+			zb_device_repair zdr
+			INNER JOIN zb_device_repair_apply_item zdrai
+				ON zdrai.id = zdr.repair_apply_item_id
+			INNER JOIN zb_device_repair_apply zdra
+				ON zdra.id = zdrai.repair_apply_id
+			INNER JOIN zb_device_accounts zda
+				ON zda.id = zdr.device_accounts_id
+		<where>
+			<if test="id != null and id != ''">
+				zdr.id = #{id}
+			</if>
+		</where>
+	</select>
+</mapper>

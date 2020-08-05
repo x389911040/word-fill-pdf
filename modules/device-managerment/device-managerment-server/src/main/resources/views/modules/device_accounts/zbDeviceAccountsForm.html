@@ -1,0 +1,387 @@
+<% layout('/layouts/default.html', {title: '设备登记管理', libs: ['validate','dataGrid','zTree']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header with-border">
+			<div class="box-title">
+				<i class="fa icon-note"></i> ${text(zbDeviceAccounts.isNewRecord ? '新增设备台账' : '编辑设备台账')}
+			</div>
+			<div class="box-tools pull-right">
+				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+			</div>
+		</div>
+		<#form:form id="inputForm" model="${zbDeviceAccounts}" action="${ctx}/device/device_accounts/zbDeviceAccounts/save" method="post" class="form-horizontal">
+			<div class="box-body">
+				<div class="form-unit">${text('基本信息')}</div>
+				<#form:hidden path="id"/>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('设备编号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="accountsCode" maxlength="64" class="form-control required" readonly="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('设备名称')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="deviceName" maxlength="64" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('归属单位')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="ownerOfficeCode" title="${text('选择归属单位')}"
+								path="ownerOfficeCode" labelPath="ownerOfficeName"
+								url="${ctx}/sys/office/treeData"
+								class="required" allowClear="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('责任人')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:treeselect id="ownerCode" title="${text('选择责任人')}"
+								path="ownerCode" labelPath="ownerName"
+								url="${ctx}/sys/office/treeData?isLoadUser=true"
+								class="required" allowClear="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('型号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="unitType" maxlength="64" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('规格')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="spec" maxlength="64" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('生产厂家')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="manufacturer" maxlength="64" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('品牌')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="brand" maxlength="64" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('出厂日期')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="produceDate" dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm:ss" readonly="true" maxlength="30" class="form-control laydate width-datetime"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('购入日期')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="purchaseDate" dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm:ss" readonly="true" maxlength="30" class="form-control laydate width-datetime"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('投运日期')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="operateDate" dataFormat="datetime" data-type="datetime" data-format="yyyy-MM-dd HH:mm:ss" readonly="true" maxlength="30" class="form-control laydate width-datetime"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('位置')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="location" maxlength="64" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('出厂编号')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="produceCode" maxlength="64" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label class="control-label col-sm-4" title="">
+								<span class="required ">*</span> ${text('设备原值')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-8">
+								<#form:input path="originalValue" maxlength="64" class="form-control required"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<label class="control-label col-sm-2" title="">
+								<span class="required hide">*</span> ${text('设备功能描述')}：<i class="fa icon-question hide"></i></label>
+							<div class="col-sm-10">
+								<#form:textarea path="description" rows="4" maxlength="255" class="form-control" placeholder="这里填写设备的功能。。。"/>
+							</div>
+						</div>
+					</div>
+				</div>
+<!--				<div class="row">-->
+<!--					<div class="col-xs-6">-->
+<!--						<div class="form-group">-->
+<!--							<label class="control-label col-sm-4" title="">-->
+<!--								<span class="required ">*</span> ${text('拥有者类型')}：<i class="fa icon-question hide"></i></label>-->
+<!--							<div class="col-sm-8">-->
+<!--								<#form:radio id="ownerType" path="ownerType" dictType="zb_device_owner_type" class="form-control required" defaultValue="1"/>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--					<div class="col-xs-6">-->
+<!--						<div class="form-group">-->
+<!--							<label class="control-label col-sm-4" title="">-->
+<!--								<span class="required ">*</span> ${text('拥有者编码')}：<i class="fa icon-question hide"></i></label>-->
+<!--							<div class="col-sm-8">-->
+<!--								<#form:input path="ownerCode" maxlength="50" class="form-control required"/>&ndash;&gt;-->
+<!--								path="ownerCode" labelPath="ownerName"-->
+<!--								url="${ctx}/sys/office/treeData?isLoadUser=true"-->
+<!--								class=" required" allowClear="true"/>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+				<div class="form-unit">${text('设备附件')}</div>
+				<div class="ml10 mr10">
+					<table id="zbDeviceAccountsItemDataGrid"></table>
+					<% if (hasPermi('device_accounts:zbDeviceAccounts:edit')){ %>
+						<a href="#" id="zbDeviceAccountsItemDataGridAddRowBtn" class="btn btn-primary btn-sm mt10 mb10"><i class="fa fa-plus"></i> ${text('增行')}</a>
+					<% } %>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-offset-2 col-sm-10">
+						<% if (hasPermi('device_accounts:zbDeviceAccounts:edit')){ %>
+							<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit"><i class="fa fa-check"></i> ${text('保 存')}</button>&nbsp;
+						<% } %>
+						<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()"><i class="fa fa-reply-all"></i> ${text('关 闭')}</button>
+					</div>
+				</div>
+			</div>
+		</#form:form>
+	</div>
+</div>
+<% } %>
+<script src="/js/static/js/chooseItems.js" type="application/javascript"></script>
+<script>
+	var zbDeviceAccounts = ${toJson(zbDeviceAccounts)} || {};
+	var itemArr = zbDeviceAccounts.itemList || [];
+	// var moveRecordArr = zbDeviceAccounts.moveRecordList || [];
+	// var repairRecordArr = zbDeviceAccounts.repairRecordList || [];
+
+	/**
+	 * 所有者类型单选框切换事件
+	 */
+	$("#ownerType").on("ifChecked", function (event) {
+		if (event.target.value == 1) {
+			// alert("个人");
+			// 将部门下拉树改为人物下拉树
+			$('#ownerCodeDiv').attr("data-url", "${ctx}/sys/office/treeData?isLoadUser=true");
+		} else if (event.target.value == 2) {
+			// alert("部门");
+			// 将人物下拉树修改为部门下拉树
+			$('#ownerCodeDiv').attr("data-url", "${ctx}/sys/office/treeData");
+		}
+	})
+
+	// 页面初始化
+	// function pageInit() {
+	// 	// if ($("#ownerType").val() == ${@DictUtils.getDictValue('zb_device_owner_type', '个人所有', '0')} ) {
+	// 	if (zbDeviceAccounts.ownerType == 1) {
+	// 		// 将部门下拉树改为人物下拉树
+	// 		$('#ownerCodeDiv').attr("data-url", "${ctx}/sys/office/treeData?isLoadUser=true");
+	// 	// } else if ($("#ownerType").val() == ${@DictUtils.getDictValue('zb_device_owner_type', '部门所有', '0')}) {
+	// 	} else if (zbDeviceAccounts.ownerType == 2) {
+	// 		$('#ownerCodeDiv').attr("data-url", "${ctx}/sys/office/treeData");
+	// 	}
+	//
+	// 	// 修改页面不允许修改绑定设备
+	// 	if (!zbDeviceAccounts.isNewRecord) {
+	// 		$("#bind-device").hide();
+	// 	}
+	// }
+
+	//修改页面初始化
+	// if (!zbDeviceAccounts.isNewRecord) {
+	// 	pageInit();
+	// }
+
+	/**
+	 * 选择数据加入前明细校验
+	 */
+	// var checkDataToItems = function (checkRowIds) {
+	// 	if (!checkRowIds || checkRowIds.length == 0) {
+	// 		layer.msg("请选择行");
+	// 		return false;
+	// 	}
+	//
+	// 	if (checkRowIds.length > 1) {
+	// 		layer.msg("只能选择一种设备");
+	// 		return false;
+	// 	}
+	// }
+
+	// 组装数据去列表
+	// var assembleDataToItems = function(checkData) {
+	// 	if (deviceArr.length == 0) {
+	// 		checkData.forEach(function (data, index) {
+	// 			data.isNewRecord = true;
+	// 			deviceArr.push(data);
+	// 		});
+	// 	} else {
+	// 		deviceArr = [];
+	// 		checkData.forEach(function (data, index) {
+	// 			data.isNewRecord = true;
+	// 			deviceArr.push(data);
+	// 		});
+	// 	}
+	//
+	// 	// 刷新主页面明细表格
+	// 	$("#zbDeviceTable").jqGrid('setGridParam', { data: deviceArr});
+	// 	$("#zbDeviceTable").trigger('reloadGrid');
+	// }
+
+	// 获取子Frame内容
+	// var searchColumnModel = function () {
+	// 	var colunmModels = [
+	// 		{header:'主键', name:'id', hidden:true},
+	// 		{header:'${text("设备编码")}', name:'deviceCode', width:150},
+	// 		{header:'${text("设备名称")}', name:'deviceName', width:150},
+	// 		{header:'${text("设备类型")}', name:'deviceType', width:150, formatter: function(val, obj, row, act){
+	// 				return js.getDictLabel(${@DictUtils.getDictListJson('zb_device_type')}, val, '${text("未知")}', true);
+	// 			}}
+	// 	];
+	// 	return  colunmModels;
+	// }
+
+	// 选择设备
+	// $("#bind-device").click(function () {
+	// 	// 组装查询参数
+	// 	var searchParams = {};
+	// 	searchParams.allotState = 2;
+	// 	// 弹框参数组装，弹出弹框
+	// 	var options = {
+	// 		title: '选择绑定设备',
+	// 		url: '${ctx}/device_info/zbDevice/listData',
+	// 		searchParams: searchParams,
+	// 		checkDataMethod: checkDataToItems,
+	// 		assembleMethod: assembleDataToItems,
+	// 		columnModel: searchColumnModel
+	// 	}
+	// 	// 打开弹框
+	// 	chooseItems(options);
+	// });
+
+	// 初始化设备表格
+	$("#zbDeviceAccountsItemDataGrid").dataGrid({
+		data: itemArr,
+		datatype: "local", // 设置本地数据
+		showRownum: true,		// 显示行号
+		// showCheckbox: true,		// 显示复选框
+		// emptyDataHint: true,	// 无数据时显示
+		autoGridHeight: function(){return 'auto'}, // 设置自动高度
+
+		// 设置数据表格列
+		columnModel: [
+			{header:'主键', name:'id', hidden:true, editable:true},
+			{header:'${text("名称")}', name:'deviceName', width:150, editable:true},
+			{header:'${text("生产厂家")}', name:'manufacturer', width:150, editable:true},
+			{header:'${text("型号")}', name:'unitType', width:150, editable:true},
+			{header:'${text("规格")}', name:'spec', width:150, editable:true},
+			{header:'${text("数量")}', name:'num', width:150, editable:true},
+			{header:'${text("功能")}', name:'description', width:150, editable:true},
+			{header:'${text("备注")}', name:'remarks', width:150, editable:true},
+			{header:'${text("操作")}', name:'actions', width:150, sortable:false, fixed:true, formatter: function(val, obj, row, act){
+				var actions = [];
+				if (row.isNewRecord == false){
+					actions.push('<a href="#" onclick="js.confirm(\'${text("你确认要删除这条数据吗？")}\', function(){$(\'#zbDeviceAccountsItemDataGrid\').dataGrid(\'setRowData\',\''+obj.rowId+'\',null,{display:\'none\'});$(\'#'+obj.rowId+'_status\').val(\''+Global.STATUS_DELETE+'\');});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				}else{
+					actions.push('<a href="#" onclick="js.confirm(\'${text("你确认要删除这条数据吗？")}\', function(){$(\'#zbDeviceAccountsItemDataGrid\').dataGrid(\'delRowData\',\''+obj.rowId+'\')});return false;"><i class="fa fa-trash-o"></i></a>&nbsp;');
+				}
+				return actions.join('');
+			}, editoptions: {defaultValue: 'new'}}
+		],
+
+		// 编辑表格参数
+		editGrid: true,				// 是否是编辑表格
+		editGridInitRowNum: 0,		// 编辑表格的初始化新增行数
+		editGridAddRowBtn: $('#zbDeviceAccountsItemDataGridAddRowBtn'),	// 子表增行按钮
+		editGridAddRowInitData: {id: '', status: Global.STATUS_NORMAL},	// 新增行的时候初始化的数据
+
+		// 编辑表格的提交数据参数
+		editGridInputFormListName: 'itemList', // 提交的数据列表名
+		editGridInputFormListAttrs: 'id, deviceName, manufacturer, unitType, spec, num, description, remarks', // 提交数据列表的属性字段
+
+		// 加载成功后执行事件
+		ajaxSuccess: function(data){
+			// layer.msg("OK");
+		}
+	});
+</script>
+<script>
+	$("#inputForm").validate({
+		submitHandler: function(form){
+			js.ajaxSubmitForm($(form), function(data){
+				js.showMessage(data.message);
+				if(data.result == Global.TRUE){
+					js.closeCurrentTabPage(function(contentWindow){
+						contentWindow.page();
+					});
+				}
+			}, "json");
+		}
+	});
+</script>

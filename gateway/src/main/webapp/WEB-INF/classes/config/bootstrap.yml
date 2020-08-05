@@ -1,0 +1,169 @@
+
+#======================================#
+#========== Server settings ===========#
+#======================================#
+
+server:
+
+  port: 8980
+    
+#======================================#
+#========== Cloud settings ============#
+#======================================#
+
+# 服务注册
+#eureka:
+#
+#  # 实例设置
+#  instance:
+#    # 实例主机名称
+#    hostname: 127.0.0.1
+#    # 实例是否允许使用IP
+#    preferIpAddress: false
+#
+#  # 客户端设置
+#  client:
+#    # 注册中心地址（集群时指定另外一个注册中心地址）
+#    serviceUrl.defaultZone: http://127.0.0.1:8970/eureka/
+
+#======================================#
+#========== Spring settings ===========#
+#======================================#
+
+spring:
+  
+  # 应用程序名称
+  application:
+    name: zb-modules-gateway
+
+  # 当前环境名称（注意：不可设置为 test 它是单元测试专用的名称）
+  profiles:
+    active: default
+    
+  # 分布式配置中心
+  cloud:
+#    config:
+#      discovery:
+#        enabled: true
+#        serviceId: jeesite-cloud-config
+#
+#    # Consul 服务发现
+#    consul:
+#      host: 127.0.0.1
+#      port: 8500
+#      discovery:
+#        hostname: 127.0.0.1
+#        preferIpAddress: false
+        
+    # 服务注册和配置
+    nacos:
+      discovery:
+        server-addr: 192.168.1.21:8848
+      config:
+        server-addr: 192.168.1.21:8848
+        file-extension: yml
+        group: zb-project
+        ext-config:
+          - data-id: application.yml
+            group: zb-project
+
+    # 网关路由配置
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            #            allowedOrigins: "http://docs.spring.io"
+            allowedMethods:
+              - GET
+      defaultFilters:
+        - PreserveHostHeader
+      routes:
+        - id: rdpmtype
+          uri: lb://jeesite-cloud-module-rdtest/js/a/rdpmtype/rdPmType
+          predicates:
+            - Path=/js/a/rdpmtype/rdPmType/**
+        #采购
+        - id: zbCgTestDemo
+          uri: lb://jeesite-cloud-module-rdtest/js/a/zb/zbCgTestDemo
+          predicates:
+            - Path=/js/a/zb/zbCgTestDemo/**
+        #装备办审核
+        - id: testzbb
+          uri: lb://jeesite-cloud-module-rdtest/js/a/zb/zbCgTestDemozbb
+          predicates:
+            - Path=/js/a/zb/zbCgTestDemozbb/**
+        #自购借款申请
+        - id: borrowMoney
+          uri: lb://jeesite-cloud-module-rdtest/js/a/zb/zbSelfbuyBorrowmoney
+          predicates:
+            - Path=/js/a/zb/zbSelfbuyBorrowmoney/**
+        #自购借款申请
+        - id: indentborrowMoney
+          uri: lb://jeesite-cloud-module-rdtest/js/a/zbindent/zbMtpselfIndent
+          predicates:
+            - Path=/js/a/zbindent/zbMtpselfIndent/**
+        #其他部门审核
+        - id: testqtbm
+          uri: lb://jeesite-cloud-module-rdtest/js/a/zb/zbCgTestDemoqtbm
+          predicates:
+            - Path=/js/a/zb/zbCgTestDemoqtbm/**
+        #统购申请
+        - id: testtg
+          uri: lb://jeesite-cloud-module-rdtest/js/a/monopolizepur/zbMonoplizePurchase
+          predicates:
+            - Path=/js/a/monopolizepur/zbMonoplizePurchase/**
+        #统购计划申请
+        - id: testplan
+          uri: lb://jeesite-cloud-module-rdtest/js/a/plan/zbMonopolizePlan
+          predicates:
+            - Path=/js/a/plan/zbMonopolizePlan/**
+        #统购借款
+        - id: testmonselfmon
+          uri: lb://jeesite-cloud-module-rdtest/js/a/monopolize/monSelfbuyBorrowmoney
+          predicates:
+            - Path=/js/a/monopolize/monSelfbuyBorrowmoney/**
+        #统购订货单
+        - id: testmonindent
+          uri: lb://jeesite-cloud-module-rdtest/js/a/monindent/monopolizeIndent
+          predicates:
+            - Path=/js/a/monindent/monopolizeIndent/**
+        #统购收货回执单
+        - id: testreceiving
+          uri: lb://jeesite-cloud-module-rdtest/js/a/zbzbreceiving/zbPurchaseReceivingnote
+          predicates:
+            - Path=/js/a/zbzbreceiving/zbPurchaseReceivingnote/**
+        #设备调拨
+        - id: allot
+          uri: lb://jeesite-cloud-module-rdtest/js/a/allot/allotAdmin
+          predicates:
+            - Path=/js/a/allot/allotAdmin/**
+
+        # 设备管理服务端路由
+        - id: device
+          uri: lb://zb-modules-device/js/a/device
+          predicates:
+            - Path=/js/a/device/**
+        # 设备管理客户端接口
+        - id: device_client
+          uri: lb://zb-modules-device/js/a/**
+          predicates:
+            - Path=/js/api/device/**
+        # 仓库管理
+        - id: warehouse
+          uri: lb://rongda-zb-modules-warehouse/js/a/warehouse
+          predicates:
+            - Path=/js/a/warehouse/**
+
+        # 基础权限模块
+        - id: core
+          uri: lb://zb-modules-core/js
+          predicates:
+            - Path=/js/**
+
+  # 打印横幅
+  main:
+    bannerMode: "off"
+    
+# 日志配置
+logging:
+  config: classpath:config/logback-spring.xml
